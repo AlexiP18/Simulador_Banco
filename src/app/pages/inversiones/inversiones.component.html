@@ -1,0 +1,43 @@
+<app-header></app-header>
+<section class="banner">
+    <h1>Simulador de Inversiones</h1>
+    <p>Conoce cuánto dinero recibirás según el monto y plazo que elijas.</p>
+</section>
+<section class="content flex justify-content-center">
+    <div class="flex gap-5 mb-3">
+        <div class="flex content-datos flex-column">
+            <h2 class="flex justify-content-center mb-6">Datos de la Inversión</h2>
+            <div class="flex align-items-left gap-3 mb-3 flex-column">
+                <label class="font-semibold w-15rem">Monto a Invertir:</label>
+                <input type="text" pInputText placeholder="Ej. $10000" maxlength="10" (input)="handleInputNumbers($event)" [(ngModel)]="monto" />
+            </div>
+            <div class="flex align-items-left mb-3 flex-row">
+                <div class="flex align-items-left gap-3 mb-3 flex-column">
+                    <label class="font-semibold w-15rem">Tipo de Plazo:</label>
+                    <p-dropdown [options]="plazos" [(ngModel)]="selectedPlazo" optionLabel="name" placeholder="Selecciona tu Plazo"></p-dropdown>
+                </div>
+                <div class="flex align-items-left gap-3 mb-3 flex-column">
+                    <label class="font-semibold w-15rem">Duración:</label>
+                    <input type="text" pInputText placeholder="Ej. 12" maxlength="3" (input)="handleInputNumbers($event)" [(ngModel)]="duracionPlazo" />
+                </div>
+            </div>
+            <p-button label="Simular" (click)="simularInversion()"></p-button>
+            <div class="flex mt-5 flex-column gap-3" *ngIf="interesGenerado !== null && montoFinal !== null">
+                <h4 class="flex justify-content-center">RECIBIRÁ:</h4>
+                <div class="card-container">
+                    <div class="performance-section">
+                        <div class="label">RENDIMIENTO NETO</div>
+                        <div class="label">+ CAPITAL</div>
+                        <div class="amount">{{montoFinal | currency:'USD':'symbol':'1.2-2'}}</div>
+                      </div>
+                      <div class="interest-section">
+                        <div class="interest-label">INTERÉS <span class="highlight">GANADO</span></div>
+                        <div class="interest-rate">{{interesGenerado | currency:'USD'}}</div>
+                      </div>
+                </div>
+
+              </div>
+        </div>
+    </div>
+</section>
+<app-footer></app-footer>

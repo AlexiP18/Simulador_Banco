@@ -1,0 +1,131 @@
+<app-header></app-header>
+
+<body>
+    <section class="video-container">
+        <video autoplay muted loop>
+            <source src="../../../assets/images/portada.mp4" type="video/mp4">
+        </video>
+        <div class="txt-video">
+            <h2>Conectando tus metas <br><span>con oportunidades.</span></h2>
+            <i id="bounce-icon" class="pi pi-angle-double-down" style="font-size: 3rem; color: white;"></i>
+        </div>
+    </section>
+    <section id="info" class="flex flex-row justify-content-center flex-wrap">
+        <div class="card-container">
+            <p-card header="Compromiso con la Sostenibilidad">
+                <p class="m-0">
+                    Demostramos nuestro compromiso con la sostenibilidad a través de el uso de energías renovables
+                </p>
+            </p-card>
+        </div>
+        <div class="card-container">
+            <p-card header="Contamos con calificación AAA">
+                <p class="m-0">
+                    Con una calificación AAA, destacamos por nuestra solidez financiera.
+                </p>
+            </p-card>
+        </div>
+        <div class="card-container">
+            <p-card header="Reputación Corporativa">
+                <p class="m-0">
+                    Somos el banco más respetado en Ecuador, gracias a nuestra ética y transparencia.
+                </p>
+            </p-card>
+        </div>
+        <div class="card-container">
+            <p-card header="Innovación en Productos">
+                <p class="m-0">
+                    Destacamos por nuestra innovación, ofreciendo productos y servicios adaptados a las necesidades de
+                    nuestros clientes.
+                </p>
+            </p-card>
+        </div>
+    </section>
+    <section class="container m-2 px-4 py-2">
+        <h1 class="card-title text-4xl font-bold">Ponte en marcha.</h1>
+        <h2 class="card-subtitle text-gray-600 mb-4">Personas</h2>
+        <div class="flex flex-wrap justify-content-center column-gap-4 row-gap-4">
+            <div *ngFor="let card of cards" class="relative cursor-pointer overflow-hidden">
+                <div class="zoom-container">
+                    <img [src]="card.image" class="flex object-cover" style="width: 17rem; border-radius: 20px;">
+                    <div class="absolute txt-sup bottom-0 pb-7 ml-4 w-full text-white">
+                        <p class="text-sm mb-2 font-bold">{{card.subtitle}}</p>
+                        <h3 class="text-2xl font-bold mb-4" [innerHTML]="card.title"></h3>
+                        <div class="btn-flecha">
+                            <i class="pi pi-arrow-down-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container m-2 px-4 py-2">
+        <h1 class="card-title text-4xl font-bold mb-4">Empieza a crecer.</h1>
+        <div class="container">
+            <div class="content">
+                <div class="hero-section">
+                    <img src="../../../assets/images/negocio.jpg" class="hero-image">
+                    <div class="hero-text">
+                        <h3>Él no se detuvo,</h3>
+                        <h3>hizo crecer su negocio.</h3>
+                    </div>
+                </div>
+
+                <div class="services-grid">
+                    <div class="service-card" style="cursor: pointer;">
+                        <div class="card-content">
+                            <span>Optimiza tu tiempo</span>
+                            <h4>Abre tu cuenta Corriente</h4>
+                            <div class="btn-flecha text-white">
+                                <i class="pi pi-arrow-down-right"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-card" style="cursor: pointer;" (click)="navigateToCreditos()">
+                        <div class="card-content">
+                            <span>Haz crecer tu negocio</span>
+                            <h4>Solicita un crédito</h4>
+                            <div class="btn-flecha text-white">
+                                <i class="pi pi-arrow-down-right"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-card" style="cursor: pointer;">
+                        <div class="card-content">
+                            <span>Gestiona ágilmente</span>
+                            <h4>Paga a tus proveedores</h4>
+                            <div class="btn-flecha text-white">
+                                <i class="pi pi-arrow-down-right"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-card" style="cursor: pointer;" (click)="navigateToInversiones()">
+                        <div class="card-content">
+                            <span>Tu dinero, tu futuro</span>
+                            <h4>Invierte tus fondos</h4>
+                            <div class="btn-flecha text-white">
+                                <i class="pi pi-arrow-down-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container m-2 px-4 py-2">
+        <h1 class="card-title text-4xl font-bold mb-4">Pensamos en ti.</h1>
+        <p-carousel [value]="servicios" [numVisible]="3">
+            <ng-template pTemplate="item" let-servicio>
+                <div class="service-card" style="cursor: pointer;">
+                    <i [class]="servicio.icon" class="icon"></i>
+                    <h3 [innerHTML]="servicio.title"></h3>
+                    <p>{{ servicio.subtitle }}</p>
+                </div>
+            </ng-template>
+        </p-carousel>
+    </section>
+</body>
+<app-footer></app-footer>

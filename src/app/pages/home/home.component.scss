@@ -1,0 +1,210 @@
+.video-container {
+    position: relative;
+    height: calc(100vh - 86.17px);
+    overflow: hidden;
+}
+
+.video-container video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+}
+
+.texto-superpuesto-video {
+    width: 100% !important;
+    height: calc(100vh - 86.17px);
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, .3);
+}
+
+.txt-video h2 {
+    position: relative;
+    padding: 9.7rem 0 0 20rem;
+    font-size: 54px;
+    font-family: 'Roboto';
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.txt-video span {
+    padding-left: 20rem;
+}
+
+.txt-video i {
+    position: relative;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 250%);
+}
+
+.bounce {
+    animation: rebote 0.5s ease-in-out;
+}
+
+.btn-flecha {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 15px 35px 15px 0;
+    padding: 10px;
+    background-color: rgb(91, 103, 172);
+    border-radius: 5px;
+}
+
+.txt-sup {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.card-title,
+.card-subtitle {
+    margin: 0;
+}
+
+.card-container {
+    margin: 10px;
+    width: 250px;
+}
+
+#info {
+    margin: 20px;
+}
+
+::ng-deep .p-card {
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    background-color: rgb(243, 243, 243);
+    height: 14rem;
+}
+
+.zoom-container {
+    overflow: hidden;
+    position: relative;
+    border-radius: 20px;
+}
+
+.zoom-container img {
+    transition: transform 0.3s ease;
+}
+
+.zoom-container:hover img {
+    transform: scale(1.05);
+    border: 10px;
+}
+
+.service-card {
+    overflow: hidden;
+    position: relative;
+    background-color: #fff;
+    padding: 2rem;
+    margin: 1rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card .icon {
+    font-size: 2.5rem;
+    color: #007ad9;
+    margin-bottom: 0.5rem;
+}
+
+.service-card h3 {
+    font-size: 1.3rem;
+    color: #007ad9;
+    margin: 0;
+    margin-bottom: 0.8rem;
+}
+
+.service-card p {
+    font-size: 1rem;
+    color: #333;
+    margin: 0;
+}
+
+.container {
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.hero-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.hero-image {
+    height: 400px;
+    object-fit: cover;
+    border-radius: 1rem;
+}
+
+.hero-text {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.hero-text h3 {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 0.5rem;
+}
+
+.card-content{
+    text-align: left;
+}
+
+.card-content span{
+    font-size: 18px;
+}
+
+.card-content h4{
+    font-size: 20px;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+@keyframes rebote {
+    0% {
+        transform: translate(-50%, 250);
+    }
+
+    50% {
+        transform: translate(-50%, 70px);
+    }
+
+    100% {
+        transform: translate(-50%, 250);
+    }
+}

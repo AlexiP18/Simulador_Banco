@@ -1,0 +1,59 @@
+<app-header></app-header>
+<section class="banner">
+    <h1>Simulador de Crédito</h1>
+    <p>Calcula tu cuota mensual basada en el valor del préstamo que deseas solicitar.</p>
+</section>
+<section class="content">
+    <div class="flex gap-5 mb-3">
+        <div class="flex content-datos flex-column" style="width: 30%;">
+            <h2 class="flex justify-content-center">Datos del Crédito</h2>
+            <div class="flex align-items-left gap-3 mb-3 flex-column">
+                <label class="font-semibold w-15rem">Seleccione el Tipo de Crédito:</label>
+                <p-dropdown [options]="creditos" [(ngModel)]="selectedCredito" optionLabel="name" placeholder="Seleccione una opción"></p-dropdown>
+            </div>
+            <div class="flex align-items-left gap-3 mb-3 flex-column">
+                <label class="font-semibold w-15rem">Cantidad de dinero Solicitado:</label>
+                <input type="text" pInputText placeholder="Ej.$10000" maxlength="10" (input)="handleInputNumbers($event)" [(ngModel)]="montoSolicitado"/>
+            </div>
+            <div class="flex align-items-left gap-3 mb-3 flex-column">
+                <label class="font-semibold w-15rem">Plazo a Pagar (Meses):</label>
+                <p-dropdown [options]="plazos" [(ngModel)]="selectedPlazo" optionLabel="name" placeholder="Selecciona tu Plazo"></p-dropdown>
+            </div>
+            <div class="flex align-items-left gap-3 mb-3 flex-column">
+                <label class="font-semibold ">Método para pagar los intereses:</label>
+                <p-dropdown [options]="metodos" [(ngModel)]="selectedMetodo" optionLabel="name" placeholder="Seleccione una opción"></p-dropdown>
+            </div>
+            <p-button label="Simular" (click)="simularCredito()"></p-button>
+        </div>
+        <p-divider layout="vertical"></p-divider>
+        <div style="width: 60%;">
+            <h2 class="flex justify-content-center">Tabla de Amortización</h2>
+            <div style="height: 360px; overflow-y: auto;margin-bottom: 17px;">
+                <p-table [value]="cuotas" styleClass="p-datatable-gridlines">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>No.</th>
+                            <th>Cuota</th>
+                            <th>Seguro</th>
+                            <th>Interés</th>
+                            <th>Capital</th>
+                            <th>Saldo</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-cuota>
+                        <tr>
+                            <td>{{ cuota.code }}</td>
+                            <td>{{ cuota.name }}</td>
+                            <td>{{ cuota.seguro }}</td>
+                            <td>{{ cuota.category }}</td>
+                            <td>{{ cuota.quantity }}</td>
+                            <td>{{ cuota.saldo }}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+            <p-button label="Descargar Tabla" (click)="descargarTabla()" [disabled]="cuotas.length === 0"></p-button>
+        </div>
+    </div>
+</section>
+<app-footer></app-footer>

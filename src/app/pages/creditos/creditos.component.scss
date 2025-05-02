@@ -1,0 +1,23 @@
+.banner{
+    padding: 40px;
+    background-color: rgb(203, 233, 241);
+}
+
+.banner h1{
+    font-size: 30px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: bold;
+}
+
+.banner p{
+    font-size: 18px;
+}
+
+.content{
+    padding: 2rem 2rem 2rem 5rem;
+    height: 34.5rem;
+}
+
+::ng-deep  .p-dropdown, input{
+    width: 100% !important;
+}

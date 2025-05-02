@@ -1,0 +1,18 @@
+<p-toolbar [style]="{'background-image': 'linear-gradient(to right, var(--bluegray-500), var(--bluegray-800))' }">
+    <ng-template pTemplate="start">
+        <img src="assets/images/Logo.png" width="80"/>
+    </ng-template>
+    <ng-template pTemplate="center">
+        <div class="flex gap-3 align-items-center">
+                <p-button class="btn-opciones" icon="pi pi-home" label="Inicio" (click)="navigateToInicio()" rounded="true" />
+                <p-button class="btn-opciones" icon="pi pi-headphones" label="Servicio Al Cliente" (click)="navigateToServicio()" rounded="true" severity="secondary" />
+                <p-button class="btn-opciones" icon="pi pi-phone" label="Contactos" rounded="true" severity="secondary" />
+        </div>
+    </ng-template>
+    <ng-template pTemplate="end">
+        <div class="flex align-items-center gap-2">
+            <p-button label="Abre tu Cuenta" severity="secondary"/>
+            <p-button label="Acceso a Clientes" severity="primary"/>
+        </div>
+    </ng-template>
+</p-toolbar>

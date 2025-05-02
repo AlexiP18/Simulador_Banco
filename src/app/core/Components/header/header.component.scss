@@ -1,0 +1,20 @@
+::ng-deep .p-toolbar {
+    border: none;
+    border-radius: 0;
+    padding: 0.7rem 2rem 0.7rem 2rem;
+}
+
+::ng-deep .btn-opciones .p-button {
+    background-color: transparent !important;
+    border: none;
+}
+
+::ng-deep .btn-opciones .p-button:hover{
+    background-color: rgba(160, 160, 160,.3) !important;
+}
+
+::ng-deep .p-breadcrumb{
+    border: none;
+    border-radius: 0;
+    background-color: rgba(0, 0, 0,.6);
+}
