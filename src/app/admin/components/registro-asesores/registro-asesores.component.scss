@@ -1,0 +1,385 @@
+// Import Google Material Icons
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+.asesor-crediticio {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  font-family: 'Roboto', Arial, sans-serif;
+  max-width: 1200px;
+  margin: 0 auto; /* Centra el div asesor-crediticio en la página */
+
+  .formulario {
+    flex: 1 1 calc(100% - 20px);
+    max-width: 100%;
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: #3a3a3a;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+
+      label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 8px;
+        color: #555;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+
+        &:focus {
+          border-color: #3f51b5;
+          outline: none;
+          box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.2);
+        }
+      }
+    }
+
+    .btn-agregar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 12px;
+      background-color: #3f51b5;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #303f9f;
+      }
+
+      .material-icons {
+        margin-left: 8px;
+        font-size: 18px;
+      }
+    }
+  }
+
+  .tabla {
+    flex: 1 1 100%;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+
+    .tabla-acciones {
+      display: flex;
+      justify-content: flex-end; /* Alinea los botones del header a la derecha */
+      gap: 10px;
+      margin-bottom: 15px;
+
+      .action-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: #f5f5f5;
+        color: #555;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+          background-color: #e0e0e0;
+          color: #3f51b5;
+        }
+
+        .material-icons {
+          font-size: 20px;
+        }
+      }
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin-bottom: 15px;
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+
+        thead {
+          tr {
+            background-color: #f9f9f9;
+
+            th {
+              padding: 15px 10px;
+              font-weight: 500;
+              color: #3a3a3a;
+              border-bottom: 2px solid #e0e0e0;
+            }
+          }
+        }
+
+        tbody {
+          tr {
+            transition: background-color 0.2s;
+
+            &:hover {
+              background-color: #f5f5f5;
+            }
+
+            td {
+              padding: 12px 10px;
+              border-bottom: 1px solid #eee;
+              color: #555;
+            }
+          }
+        }
+      }
+    }
+
+    // Checkbox styles
+    .checkbox-wrapper {
+      position: relative;
+      width: 18px;
+      height: 18px;
+      margin: 0 auto;
+
+      input[type="checkbox"].select-checkbox {
+        position: absolute;
+        opacity: 0;
+
+        & + label {
+          position: relative;
+          cursor: pointer;
+          display: inline-block;
+          width: 18px;
+          height: 18px;
+          border: 2px solid #ccc;
+          border-radius: 3px;
+
+          &:before {
+            content: '';
+            position: absolute;
+            left: 3px;
+            top: 0px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            opacity: 0;
+          }
+        }
+
+        &:checked + label {
+          border-color: #3f51b5;
+          background-color: #3f51b5;
+
+          &:before {
+            opacity: 1;
+          }
+        }
+
+        &:focus + label {
+          box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.2);
+        }
+      }
+    }
+
+    // Switch toggle
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 46px;
+      height: 24px;
+
+      input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+
+        &:checked + .slider {
+          background-color: #4CAF50;
+        }
+
+        &:focus + .slider {
+          box-shadow: 0 0 1px #4CAF50;
+        }
+
+        &:checked + .slider:before {
+          transform: translateX(22px);
+        }
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .3s;
+
+        &:before {
+          position: absolute;
+          content: "";
+          height: 18px;
+          width: 18px;
+          left: 3px;
+          bottom: 3px;
+          background-color: white;
+          transition: .3s;
+        }
+
+        &.round {
+          border-radius: 24px;
+
+          &:before {
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+
+    // Table footer
+    .table-footer {
+      display: flex;
+      justify-content: space-between; /* Espacio entre elementos para alinear a extremos opuestos */
+      align-items: center;
+      flex-wrap: wrap;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+      gap: 20px; /* Añade más espacio entre los elementos */
+
+      .pagination {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        .pagination-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 36px;
+          height: 36px;
+          background-color: transparent;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          color: #555;
+          transition: background-color 0.2s;
+
+          &:hover {
+            background-color: #f0f0f0;
+            color: #3f51b5;
+          }
+
+          .material-icons {
+            font-size: 20px;
+          }
+        }
+
+        .page-number {
+          display: flex;
+          align-items: center;
+          margin: 0 5px;
+
+          input {
+            width: 36px;
+            height: 36px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            -moz-appearance: textfield; /* Firefox */
+
+            /* Elimina las flechas del input number */
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
+            }
+
+            &:focus {
+              outline: none;
+              border-color: #3f51b5;
+            }
+          }
+
+          span {
+            margin-left: 5px;
+            color: #777;
+          }
+        }
+      }
+
+      .rows-per-page {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #555;
+        font-size: 14px;
+
+        select {
+          padding: 6px 8px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          background-color: white;
+          cursor: pointer;
+          font-size: 15px; /* Fuente más grande para el selector */
+
+          &:focus {
+            outline: none;
+            border-color: #3f51b5;
+          }
+        }
+      }
+    }
+  }
+
+  @media (min-width: 768px) {
+    .formulario {
+      flex: 1 1 40%;
+      max-width: 40%;
+    }
+
+    .tabla {
+      flex: 1 1 55%;
+      max-width: 55%;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .table-footer {
+      flex-direction: column-reverse; /* Invierte el orden en móviles para mantener el selector arriba */
+      gap: 15px;
+      justify-content: center !important; /* Centra los elementos en móviles */
+
+      .pagination,
+      .rows-per-page {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  }
+}

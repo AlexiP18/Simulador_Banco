@@ -1,0 +1,141 @@
+<div class="asesor-crediticio">
+  <!-- Formulario -->
+  <div class="formulario">
+    <h2>Asesor Crediticio</h2>
+    <form>
+      <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input id="nombre" type="text" placeholder="Nombre..." />
+      </div>
+      <div class="form-group">
+        <label for="apellido">Apellido</label>
+        <input id="apellido" type="text" placeholder="Apellido..." />
+      </div>
+      <div class="form-group">
+        <label for="cargo">Cargo</label>
+        <select id="cargo">
+          <option value="">Establezca el cargo...</option>
+          <option value="asesor">Asesor</option>
+          <option value="cajero">Cajero</option>
+        </select>
+      </div>
+      <button type="button" class="btn-agregar">
+        Agregar <span class="material-icons">arrow_forward</span>
+      </button>
+    </form>
+  </div>
+
+  <!-- Tabla -->
+  <div class="tabla">
+    <div class="tabla-acciones">
+      <button class="action-btn" title="Descargar">
+        <span class="material-icons">download</span>
+      </button>
+      <button class="action-btn" title="Eliminar">
+        <span class="material-icons">delete</span>
+      </button>
+      <button class="action-btn" title="Editar">
+        <span class="material-icons">edit</span>
+      </button>
+    </div>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <div class="checkbox-wrapper">
+                <input type="checkbox" id="select-all" class="select-checkbox" />
+                <label for="select-all"></label>
+              </div>
+            </th>
+            <th>Nombre</th>
+            <th>Cargo</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="checkbox-wrapper">
+                <input type="checkbox" id="row1" class="select-checkbox" />
+                <label for="row1"></label>
+              </div>
+            </td>
+            <td>Alex</td>
+            <td>Asesor</td>
+            <td>
+              <label class="switch">
+                <input type="checkbox" checked />
+                <span class="slider round"></span>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="checkbox-wrapper">
+                <input type="checkbox" id="row2" class="select-checkbox" />
+                <label for="row2"></label>
+              </div>
+            </td>
+            <td>Jose</td>
+            <td>Cajero</td>
+            <td>
+              <label class="switch">
+                <input type="checkbox" />
+                <span class="slider round"></span>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="checkbox-wrapper">
+                <input type="checkbox" id="row3" class="select-checkbox" />
+                <label for="row3"></label>
+              </div>
+            </td>
+            <td>Juan</td>
+            <td>Asesor</td>
+            <td>
+              <label class="switch">
+                <input type="checkbox" checked />
+                <span class="slider round"></span>
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-footer">
+      <div class="pagination">
+        <button class="pagination-btn" title="Primera página">
+          <span class="material-icons">first_page</span>
+        </button>
+        <button class="pagination-btn" title="Página anterior">
+          <span class="material-icons">navigate_before</span>
+        </button>
+        <div class="page-number">
+          <input type="number" min="1" max="10" value="1" />
+          <span>/ 10</span>
+        </div>
+        <button class="pagination-btn" title="Página siguiente">
+          <span class="material-icons">navigate_next</span>
+        </button>
+        <button class="pagination-btn" title="Última página">
+          <span class="material-icons">last_page</span>
+        </button>
+      </div>
+      <div class="rows-per-page">
+        <span>Filas por página:</span>
+        <select>
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+          <option value="25">25</option>
+          <option value="30">30</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
