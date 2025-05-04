@@ -18,13 +18,22 @@ import { TableModule } from 'primeng/table';
 import { DividerModule } from 'primeng/divider';
 import { InversionesComponent } from './pages/inversiones/inversiones.component';
 
+import { HttpClientModule } from '@angular/common/http';
+
+
+import { InfoInstitucionalComponent } from './admin/components/info-institucional/info-institucional.component';
+import { AdminModule } from './admin/admin.module';
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ServiciosComponent,
     CreditosComponent,
-    InversionesComponent
+    InversionesComponent,
+
+
+    InversionesComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +47,9 @@ import { InversionesComponent } from './pages/inversiones/inversiones.component'
     FormsModule,
     InputTextModule,
     TableModule,
-    DividerModule
+    DividerModule,
+    HttpClientModule,
+    AdminModule,
   ],
   bootstrap: [AppComponent]
 })
