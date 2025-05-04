@@ -1,0 +1,135 @@
+<div class="info-institucional">
+  <h1>Información Institucional</h1>
+  <div class="form-container">
+    <!-- Columna izquierda -->
+    <div class="left-column">
+      <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input id="nombre" type="text" placeholder="Nombre Institución Financiera" />
+      </div>
+      <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" placeholder="Descripción..." maxlength="1000" (input)="onDescriptionInput($event)"></textarea>
+        <div class="char-counter">
+          <span id="char-count">{{ charCount }}</span>/1000 caracteres
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="logo">Logo Institucional</label>
+        <div id="logo-placeholder" class="logo-placeholder" tabindex="0" (click)="onLogoClick()">
+          <input type="file" id="logo-input" accept="image/png, image/jpeg" hidden (change)="onLogoChange($event)" />
+          <img id="logo-preview" *ngIf="logoSrc" [src]="logoSrc" />
+          <span class="material-icons" *ngIf="!logoSrc">image</span>
+        </div>
+        <p class="logo-specs">
+          Formatos permitidos: JPG, PNG. Tamaño máximo: 2MB. Dimensiones recomendadas: 300x300px.
+        </p>
+      </div>
+      <div class="form-group">
+        <label for="contacto">Contacto Telefónico</label>
+        <input
+          id="contacto"
+          type="text"
+          placeholder="##-#######"
+          [class.invalid]="phoneError"
+          (input)="onPhoneInput($event)"
+          (blur)="validatePhoneNumber()"
+        />
+        <div class="error-message" *ngIf="phoneError">{{ phoneError }}</div>
+      </div>
+    </div>
+
+    <!-- Columna derecha -->
+    <div class="right-column">
+      <div class="form-group">
+        <label>Redes Sociales</label>
+        <div class="chip-grid">
+          <button class="facebook" (click)="openSocialModal('Facebook')">
+            Facebook <i class="fab fa-facebook-f"></i>
+          </button>
+          <button class="instagram" (click)="openSocialModal('Instagram')">
+            Instagram <i class="fab fa-instagram"></i>
+          </button>
+          <button class="twitter" (click)="openSocialModal('Twitter')">
+            Twitter <i class="fab fa-twitter"></i>
+          </button>
+          <button class="youtube" (click)="openSocialModal('Youtube')">
+            Youtube <i class="fab fa-youtube"></i>
+          </button>
+          <button class="linkedin" (click)="openSocialModal('LinkedIn')">
+            LinkedIn <i class="fab fa-linkedin-in"></i>
+          </button>
+          <button class="whatsapp" (click)="openSocialModal('Whatsapp')">
+            Whatsapp <i class="fab fa-whatsapp"></i>
+          </button>
+          <!-- Botones adicionales para completar el grid 3x3 si lo deseas -->
+          <button class="other" (click)="openSocialModal('TikTok')">
+            TikTok <i class="fab fa-tiktok"></i>
+          </button>
+          <button class="other" (click)="openSocialModal('Pinterest')">
+            Pinterest <i class="fab fa-pinterest"></i>
+          </button>
+          <button class="other" (click)="openSocialModal('Telegram')">
+            Telegram <i class="fab fa-telegram"></i>
+          </button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="geolocalizacion">Geolocalización</label>
+        <div class="geo-container">
+          <input
+            id="geolocalizacion"
+            type="text"
+            placeholder="Dirección-Sucursal"
+            [(ngModel)]="locationAddress"
+          />
+          <button
+            class="geo-btn"
+            title="Obtener mi ubicación actual"
+            (click)="getCurrentLocation()"
+          >
+            <span class="material-icons">location_on</span>
+          </button>
+        </div>
+        <div class="map-container">
+          <div id="map" class="google-map" #mapContainer></div>
+          <div class="map-overlay" *ngIf="!mapLoaded">
+            <span class="material-icons">map</span>
+            <p>Cargando mapa...</p>
+          </div>
+        </div>
+        <div class="location-info" *ngIf="latitude && longitude">
+          <p><strong>Latitud:</strong> {{latitude | number:'1.6-6'}}</p>
+          <p><strong>Longitud:</strong> {{longitude | number:'1.6-6'}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para redes sociales -->
+  <div class="modal" *ngIf="isModalOpen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>{{ selectedSocial }}</h2>
+        <button class="close-btn" (click)="closeSocialModal()">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group">
+          <input type="text" placeholder="Ingrese el enlace" [(ngModel)]="socialLink" />
+          <button class="icon-btn" title="Copiar" (click)="copyLink()">
+            <span class="material-icons">content_copy</span>
+          </button>
+          <button class="icon-btn" title="Borrar" (click)="clearLink()">
+            <span class="material-icons">delete</span>
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" (click)="closeSocialModal()">Cancelar</button>
+        <button class="btn-save" (click)="saveSocialLink()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
