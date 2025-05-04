@@ -20,4 +20,8 @@ export class HeaderComponent {
   navigateToServicio() {
     this.router.navigate(['/pages/servicios']);
   }
+
+  navigateToLogin() {
+    this.router.navigate(['/auth']);
+  }
 }

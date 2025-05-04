@@ -1,0 +1,66 @@
+<app-header></app-header>
+
+<div class="container">
+    <!-- Panel izquierdo -->
+    <div class="left-panel">
+      
+      <h2>Verifica en tu navegador que estás en Banca Web.</h2>
+  
+
+  
+      <img src="https://bancaweb.pichincha.com/assets/logo.svg" alt="Ilustración" class="illustration" />
+
+  
+      <p><strong>01.</strong> Cuida tu usuario y contraseña</p>
+      <p><strong>02.</strong> Antes de ingresar la Clave Digital verifica que los 4 últimos dígitos de tu cédula sean correctos.</p>
+    </div>
+  
+    <!-- Panel derecho -->
+
+
+
+  <!-- ... panel izquierdo sin cambios ... -->
+
+<!-- Panel derecho -->
+    <div class="right-panel">
+      <h2>Bienvenido a tu Banca Web</h2>
+
+      <div class="pin-container" *ngIf="!pinValidated">
+
+        <p>Documento de identidad o pasaporte</p>
+        <label for="cedula">Cédula</label>
+        <input type="text" id="cedula" name="cedula" [(ngModel)]="cedula" placeholder="Ingresa tu cédula" />
+
+        <p>Clave tarjeta de débito</p>
+        <div class="pin-dots">
+          <div *ngFor="let dot of pinArray; let i = index" [class.filled]="i < pin.length"></div>
+        </div>
+
+        <div class="pin-buttons">
+          <button *ngFor="let num of numberButtons" (click)="addDigit(num)">{{ num }}</button>
+        </div>
+
+        <button (click)="clearPin()" class="clear-btn">Borrar</button>
+
+        <!-- 🔘 Botón para verificar CI y clave -->
+        <button (click)="verificarPin()" class="verify-btn">Verificar</button>
+      </div>
+
+      <!-- Formulario solo si PIN es válido -->
+      <form *ngIf="pinValidated" class="register-form">
+        <label for="usuario">Usuario</label>
+        <input type="text" id="usuario" [(ngModel)]="usuario" name="usuario" placeholder="Ingresa tu usuario" />
+      
+        <label for="contrasena">Contraseña</label>
+        <input type="password" id="contrasena" [(ngModel)]="contrasena" name="contrasena" placeholder="Ingresa tu contraseña" />
+      
+        <label for="repetir">Repetir Contraseña</label>
+        <input type="password" id="repetir" [(ngModel)]="repetirContrasena" name="repetir" placeholder="Repite tu contraseña" />
+      
+        <button type="button" (click)="registrarUsuario()">Registrarse</button>
+      </form>
+      
+    </div>
+
+  </div>
+  

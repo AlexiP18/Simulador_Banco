@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-client',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class ClientComponent {
 
+  constructor(private router: Router) { }
+
+  navigateToInversiones(){
+    this.router.navigate(['/pages/inversiones']);
+  }
+
+  navigateToCreditos(){
+    this.router.navigate(['/pages/creditos']);
+  }
 }

@@ -18,13 +18,19 @@ import { TableModule } from 'primeng/table';
 import { DividerModule } from 'primeng/divider';
 import { InversionesComponent } from './pages/inversiones/inversiones.component';
 
+import { HttpClientModule } from '@angular/common/http';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ServiciosComponent,
     CreditosComponent,
-    InversionesComponent
+    InversionesComponent,
+
+    
   ],
   imports: [
     BrowserModule,
@@ -38,7 +44,9 @@ import { InversionesComponent } from './pages/inversiones/inversiones.component'
     FormsModule,
     InputTextModule,
     TableModule,
-    DividerModule
+    DividerModule,
+
+    HttpClientModule
   ],
   bootstrap: [AppComponent]
 })
