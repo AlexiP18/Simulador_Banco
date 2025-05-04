@@ -1,1 +1,30 @@
-<p>client works!</p>
+<app-header></app-header>
+
+<div class="productos-container">
+    <h2>Solicitar productos</h2>
+  
+    <div class="productos-grid">
+      <!-- Producto 1 -->
+      <div class="producto-card nuevo">
+        <div class="icono">
+          💵
+        </div>
+        <h3>Solicita un crédito</h3>
+        <p>Recibe efectivo desde tu tarjeta de crédito</p>
+        <button type="button" (click)="navigateToCreditos()">Avance efectivo</button>
+      </div>
+  
+      <!-- Producto 2 -->
+      <div class="producto-card">
+        <div class="icono">
+          📈
+        </div>
+        <h3>INVERSIONES</h3>
+        <p>Invierte en un depósito a plazo en tan solo tres pasos</p>
+        <button type="button" (click)="navigateToInversiones()">Invertir</button>
+      </div>
+  
+      
+    </div>
+  </div>
+  

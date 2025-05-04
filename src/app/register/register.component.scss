@@ -1,0 +1,160 @@
+.container {
+  display: flex;
+  height: calc(100vh - 80px);
+}
+
+/* Panel izquierdo */
+.left-panel {
+  width: 50%;
+  padding: 40px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.left-panel h2 {
+  font-size: 24px;
+  color: #002664;
+  margin-bottom: 20px;
+}
+
+.left-panel img.illustration {
+  width: 350px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.left-panel p {
+  font-size: 14px;
+  color: #333;
+  margin: 8px 0;
+}
+
+.left-panel strong {
+  margin-right: 6px;
+}
+
+/* Panel derecho */
+.right-panel {
+  width: 50%;
+  padding: 40px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.right-panel h2 {
+  font-size: 24px;
+  color: #002664;
+  margin-bottom: 20px;
+}
+
+form,
+.register-form {
+  width: 100%;
+  max-width: 340px;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+a {
+  font-size: 13px;
+  color: #0054a6;
+  text-decoration: none;
+  float: right;
+  margin-bottom: 10px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #ffd900;
+  border: none;
+  color: #333;
+  font-weight: bold;
+  border-radius: 6px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+/* PIN input section */
+.pin-container {
+  text-align: center;
+  width: 100%;
+  max-width: 300px;
+}
+
+.pin-dots {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+
+  div {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ccc;
+    transition: background 0.3s ease;
+  }
+
+  .filled {
+    background: #002664;
+  }
+}
+
+.pin-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 10px;
+
+  button {
+    padding: 12px;
+    font-size: 18px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+  }
+}
+
+.clear-btn {
+  margin-top: 16px;
+  background-color: rgb(189, 189, 189);
+  color: white;
+}
+
+/* Opciones */
+.options {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.option-box {
+  background-color: white;
+  padding: 12px;
+  border-radius: 8px;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+}

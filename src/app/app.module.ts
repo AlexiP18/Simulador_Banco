@@ -17,8 +17,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { DividerModule } from 'primeng/divider';
 import { InversionesComponent } from './pages/inversiones/inversiones.component';
-import { InfoInstitucionalComponent } from './admin/components/info-institucional/info-institucional.component';
-import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +24,7 @@ import { AdminModule } from './admin/admin.module';
     HomeComponent,
     ServiciosComponent,
     CreditosComponent,
-    InversionesComponent,
+    InversionesComponent
   ],
   imports: [
     BrowserModule,
@@ -40,8 +38,7 @@ import { AdminModule } from './admin/admin.module';
     FormsModule,
     InputTextModule,
     TableModule,
-    DividerModule,
-    AdminModule,
+    DividerModule
   ],
   bootstrap: [AppComponent]
 })
