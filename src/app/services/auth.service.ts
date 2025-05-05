@@ -9,7 +9,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(usuario: string, contrasena: string) {
-    return this.http.post<any>('http://localhost/API_BANCO/login.php', {
+    return this.http.post<any>('http://localhost:8080/API_BANCO/login.php', {
       usuario,
       contrasena
     });

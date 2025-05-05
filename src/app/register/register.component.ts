@@ -40,7 +40,7 @@ export class RegisterComponent {
       clave: this.pin
     };
 
-    this.http.post<any>('http://localhost/API_BANCO/verifica_ci_clave.php', payload)
+    this.http.post<any>('http://localhost:8080/API_BANCO/verifica_ci_clave.php', payload)
       .subscribe(res => {
         if (res.status === 'ok') {
           this.pinValidated = true;
@@ -72,7 +72,7 @@ export class RegisterComponent {
       tipo_usuario: 'client'
     };
 
-    this.http.post<any>('http://localhost/API_BANCO/registrar_usuario.php', data)
+    this.http.post<any>('http://localhost:8080/API_BANCO/registrar_usuario.php', data)
       .subscribe(res => {
         if (res.status === 'ok') {
           alert('Usuario registrado correctamente.');

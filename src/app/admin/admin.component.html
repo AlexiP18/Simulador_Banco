@@ -1,1 +1,27 @@
-<p>admin works!</p>
+<app-header></app-header>
+
+<div class="productos-container">
+    <h2>Panel Administrativo</h2>
+
+    <div class="productos-grid">
+      <!-- Card Info Institucional -->
+      <div class="producto-card nuevo">
+        <div class="icono">
+          🏦
+        </div>
+        <h3>INFORMACIÓN INSTITUCIONAL</h3>
+        <p>Administra la información corporativa de la institución</p>
+        <button type="button" (click)="navigateToInfoInstitucional()">Gestionar Información</button>
+      </div>
+
+      <!-- Card Registro Asesores -->
+      <div class="producto-card">
+        <div class="icono">
+          👨‍💼
+        </div>
+        <h3>REGISTRO DE ASESORES</h3>
+        <p>Administra el registro y gestión de asesores financieros</p>
+        <button type="button" (click)="navigateToRegistroAsesores()">Gestionar Asesores</button>
+      </div>
+    </div>
+</div>

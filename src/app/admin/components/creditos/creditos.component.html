@@ -1,0 +1,229 @@
+<div class="creditos-container">
+  <h1>CREDITOS</h1>
+  <!-- Layout container con formularios izquierda y tabla derecha -->
+  <div class="content-layout">
+    <!-- Formularios - IZQUIERDA -->
+    <div class="forms-container">
+      <div class="scroll-container">
+        <!-- Datos del Crédito -->
+        <div class="formulario">
+          <h2>Datos del Crédito</h2>
+          <form>
+            <div class="form-group">
+              <label for="nombreCredito">Nombre del Crédito</label>
+              <input id="nombreCredito" type="text" placeholder="Nombre..." [(ngModel)]="newCredit.name" name="creditName">
+            </div>
+
+            <div class="form-group">
+              <label for="tasaInteres">Tasa de Interés</label>
+              <div class="input-wrapper">
+                <input
+                  id="tasaInteres"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  max="50"
+                  [(ngModel)]="newCredit.interestRate"
+                  name="interestRate"
+                  (keydown)="validateNumberInput($event)"
+                  (input)="handleInterestRateInput($event)"
+                  (paste)="handlePaste($event)"
+                  (blur)="capInterestRate()">
+                <span class="percent-sign">%</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="plazoMaximo">Plazo máximo a pagar</label>
+              <div class="plazo-container">
+                <div class="input-wrapper plazo-input">
+                  <input
+                    id="plazoMaximo"
+                    type="number"
+                    [(ngModel)]="newCredit.maxTerm"
+                    name="maxTerm"
+                    [min]="1"
+                    [max]="termUnit === 'años' ? 50 : 600"
+                    (input)="handleMaxTermInput($event)">
+                </div>
+                <div class="plazo-options">
+                  <div class="option-wrapper">
+                    <input
+                      type="radio"
+                      id="anosOption"
+                      name="termUnit"
+                      value="años"
+                      [(ngModel)]="termUnit"
+                      (change)="updateMaxTermUnit('años')"
+                      checked>
+                    <label for="anosOption">Años</label>
+                  </div>
+                  <div class="option-wrapper">
+                    <input
+                      type="radio"
+                      id="mesesOption"
+                      name="termUnit"
+                      value="meses"
+                      [(ngModel)]="termUnit"
+                      (change)="updateMaxTermUnit('meses')">
+                    <label for="mesesOption">Meses</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- Cobros Adicionales -->
+        <div class="formulario">
+          <h2>Cobros Adicionales</h2>
+          <form>
+            <div class="form-group">
+              <label for="nombreCobro">Nombre</label>
+              <input id="nombreCobro" type="text" placeholder="Nombre..." [(ngModel)]="newCharge.name" name="chargeName">
+            </div>
+
+            <div class="form-group">
+              <label for="montoCobro">Monto</label>
+              <div class="input-wrapper">
+                <input
+                  id="montoCobro"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  max="5000"
+                  [(ngModel)]="newCharge.amount"
+                  name="chargeAmount"
+                  (keydown)="validateNumberInput($event)"
+                  (input)="handleChargeAmountInput($event)"
+                  (paste)="handlePaste($event)"
+                  (blur)="capChargeAmount()">
+                <span class="currency-icon">$</span>
+              </div>
+              <button class="btn-agregar small-btn" type="button" style="margin-top: 10px;">
+                <span class="material-icons">add_circle</span> Añadir
+              </button>
+            </div>
+
+            <!-- Tabla de cobros adicionales -->
+            <div class="charges-table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Monto</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let charge of selectedCreditAdditionalCharges; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ charge.name }}</td>
+                    <td>$ {{ charge.amount }}</td>
+                    <td> <!-- Action icons -->
+                      <button class="icon-btn" (click)="editCharge(charge)" title="Editar">
+                        <span class="material-icons">edit</span>
+                      </button>
+                      <button class="icon-btn" (click)="deleteCharge(charge)" title="Eliminar">
+                        <span class="material-icons">delete</span>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <button type="button" class="btn-agregar" (click)="addAdditionalCharge()">
+              Agregar Crédito <span class="material-icons">arrow_forward</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Tabla de créditos - DERECHA -->
+    <div class="tabla">
+      <div class="tabla-acciones">
+        <button class="action-btn" title="Descargar">
+          <span class="material-icons">download</span>
+        </button>
+        <button class="action-btn" title="Eliminar">
+          <span class="material-icons">delete</span>
+        </button>
+        <button class="action-btn" title="Editar">
+          <span class="material-icons">edit</span>
+        </button>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>
+                <div class="checkbox-wrapper">
+                  <input class="select-checkbox" type="checkbox" id="select-all" checked (change)="toggleAllCreditsSelection($event)">
+                  <label for="select-all"></label>
+                </div>
+              </th>
+              <th>Nombre</th>
+              <th>Tasa</th>
+              <th>Plazo max.</th>
+              <th>Cobros Adic.</th>
+              <th>Habilitar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let credit of creditTypes; let i = index">
+              <td>
+                <div class="checkbox-wrapper">
+                  <input class="select-checkbox" type="checkbox" [id]="'credit-' + i" [checked]="credit.selected" (change)="toggleCreditSelection(credit)">
+                  <label [for]="'credit-' + i"></label>
+                </div>
+              </td>
+              <td>{{credit.name}}</td>
+              <td>{{credit.interestRate}}%</td>
+              <td>{{credit.maxTerm}} {{credit.termUnit}}</td>
+              <td>
+                <button class="btn-primary" (click)="viewAdditionalCharges(credit)">Ver</button>
+              </td>
+              <td>
+                <label class="switch">
+                  <input type="checkbox" [checked]="credit.enabled" (change)="toggleCreditEnabled(credit)">
+                  <span class="slider round"></span>
+                </label>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-footer">
+        <div class="pagination">
+          <button class="pagination-btn" title="Primera página">
+            <span class="material-icons">first_page</span>
+          </button>
+          <button class="pagination-btn" title="Página anterior">
+            <span class="material-icons">navigate_before</span>
+          </button>
+          <div class="page-number">
+            <input type="number" min="1" max="10" value="1">
+            <span>/ 10</span>
+          </div>
+          <button class="pagination-btn" title="Página siguiente">
+            <span class="material-icons">navigate_next</span>
+          </button>
+          <button class="pagination-btn" title="Última página">
+            <span class="material-icons">last_page</span>
+          </button>
+        </div>
+        <div class="rows-per-page">
+          <span>Filas por página:</span>
+          <select>
+            <option value="5">5</option>
+            <option value="10" selected>10</option>
+            <option value="15">15</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
