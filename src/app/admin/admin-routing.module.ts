@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: '', component: AdminComponent },
   { path : 'asesores', component: RegistroAsesoresComponent},
   { path : 'info-institucion', component: InfoInstitucionalComponent},
-  { path : 'credito-admin', component: CreditosComponent},
+  { path : 'creditos', component: CreditosComponent},
 ];
 
 @NgModule({

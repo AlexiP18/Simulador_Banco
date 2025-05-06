@@ -149,9 +149,7 @@
         <button class="action-btn" title="Eliminar">
           <span class="material-icons">delete</span>
         </button>
-        <button class="action-btn" title="Editar">
-          <span class="material-icons">edit</span>
-        </button>
+        <!-- "Editar" button removed -->
       </div>
 
       <div class="table-container">
@@ -169,6 +167,7 @@
               <th>Plazo max.</th>
               <th>Cobros Adic.</th>
               <th>Habilitar</th>
+              <th>Acciones</th> <!-- Added new column for actions -->
             </tr>
           </thead>
           <tbody>
@@ -190,6 +189,14 @@
                   <input type="checkbox" [checked]="credit.enabled" (change)="toggleCreditEnabled(credit)">
                   <span class="slider round"></span>
                 </label>
+              </td>
+              <td> <!-- Added new cell with action buttons -->
+                <button class="icon-btn" (click)="editCredit(credit)" title="Editar">
+                  <span class="material-icons">edit</span>
+                </button>
+                <button class="icon-btn" (click)="deleteCredit(credit)" title="Eliminar">
+                  <span class="material-icons">delete</span>
+                </button>
               </td>
             </tr>
           </tbody>
@@ -224,6 +231,25 @@
           </select>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de confirmación para eliminar crédito -->
+<div class="modal-overlay" *ngIf="showDeleteModal" (click)="closeDeleteModal($event)">
+  <div class="modal-container">
+    <div class="modal-header">
+      <h3>Eliminar Crédito</h3>
+      <button class="close-btn" (click)="closeDeleteModal($event)">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>¿Está seguro que desea eliminar el crédito "{{ creditToDelete?.name }}"?</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancelar" (click)="closeDeleteModal($event)">Cancelar</button>
+      <button class="btn-eliminar" (click)="confirmDeleteCredit()">Eliminar</button>
     </div>
   </div>
 </div>

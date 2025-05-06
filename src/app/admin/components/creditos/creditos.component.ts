@@ -53,6 +53,13 @@ export class CreditosComponent implements OnInit {
   // Add this property to store the predefined interest rates
   interestRates: number[] = [5, 10, 15, 20, 25, 30, 35, 40];
 
+  // Add a property to track the credit being edited
+  editingCredit: CreditType | null = null;
+
+  // Properties for delete modal
+  showDeleteModal = false;
+  creditToDelete: CreditType | null = null;
+
   constructor() { }
 
   ngOnInit(): void {
@@ -116,26 +123,38 @@ export class CreditosComponent implements OnInit {
       return;
     }
 
-    const newId = this.creditTypes.length > 0 ? Math.max(...this.creditTypes.map(c => c.id)) + 1 : 1;
+    if (this.editingCredit) {
+      // Update existing credit
+      this.editingCredit.name = this.newCredit.name;
+      this.editingCredit.interestRate = this.newCredit.interestRate;
+      this.editingCredit.maxTerm = this.newCredit.maxTerm;
+      this.editingCredit.termUnit = this.newCredit.termUnit;
 
-    this.creditTypes.push({
-      id: newId,
-      name: this.newCredit.name,
-      interestRate: this.newCredit.interestRate,
-      maxTerm: this.newCredit.maxTerm,
-      termUnit: this.newCredit.termUnit,
-      additionalCharges: [],
-      enabled: true,
-      selected: true
-    });
+      // Update additional charges if they were modified
+      this.editingCredit.additionalCharges = [...this.selectedCreditAdditionalCharges];
+
+      // Clear editing state
+      this.editingCredit = null;
+    } else {
+      // Add new credit
+      const newId = this.creditTypes.length > 0 ? Math.max(...this.creditTypes.map(c => c.id)) + 1 : 1;
+
+      this.creditTypes.push({
+        id: newId,
+        name: this.newCredit.name,
+        interestRate: this.newCredit.interestRate,
+        maxTerm: this.newCredit.maxTerm,
+        termUnit: this.newCredit.termUnit,
+        additionalCharges: [...this.selectedCreditAdditionalCharges],
+        enabled: true,
+        selected: true
+      });
+    }
 
     // Reset form
-    this.newCredit = {
-      name: '',
-      interestRate: 15,
-      maxTerm: 60,
-      termUnit: 'meses'
-    };
+    this.resetCreditForm();
+    // Reset additional charges
+    this.selectedCreditAdditionalCharges = [];
   }
 
   // View additional charges for a specific credit
@@ -470,5 +489,92 @@ export class CreditosComponent implements OnInit {
       name: '',
       amount: 0
     };
+  }
+
+  /**
+   * Prepares a credit for editing by populating the form inputs.
+   */
+  editCredit(credit: CreditType): void {
+    this.editingCredit = credit;
+
+    // Populate the form with the selected credit's data
+    this.newCredit = {
+      name: credit.name,
+      interestRate: credit.interestRate,
+      maxTerm: credit.maxTerm,
+      termUnit: credit.termUnit
+    };
+
+    // Update the term unit radio button
+    this.termUnit = credit.termUnit;
+
+    // Load the additional charges of the selected credit
+    this.selectedCreditAdditionalCharges = [...credit.additionalCharges];
+
+    // Scroll to the top of the form for better UX
+    const formsContainer = document.querySelector('.forms-container');
+    if (formsContainer) {
+      formsContainer.scrollTop = 0;
+    }
+  }
+
+  /**
+   * Opens the delete confirmation modal
+   */
+  deleteCredit(credit: CreditType): void {
+    this.creditToDelete = credit;
+    this.showDeleteModal = true;
+  }
+
+  /**
+   * Closes the delete confirmation modal
+   */
+  closeDeleteModal(event: Event): void {
+    // Only close if clicking the overlay or close button
+    if (
+      (event.target as HTMLElement).classList.contains('modal-overlay') ||
+      (event.target as HTMLElement).closest('.close-btn') ||
+      (event.target as HTMLElement).classList.contains('btn-cancelar')
+    ) {
+      this.showDeleteModal = false;
+      this.creditToDelete = null;
+      event.stopPropagation();
+    }
+  }
+
+  /**
+   * Confirms credit deletion after modal confirmation
+   */
+  confirmDeleteCredit(): void {
+    if (this.creditToDelete) {
+      const index = this.creditTypes.findIndex(c => c.id === this.creditToDelete!.id);
+      if (index > -1) {
+        this.creditTypes.splice(index, 1);
+      }
+
+      // If the deleted credit was being edited, clear the editing state
+      if (this.editingCredit && this.editingCredit.id === this.creditToDelete.id) {
+        this.editingCredit = null;
+        this.resetCreditForm();
+      }
+
+      // Close the modal
+      this.showDeleteModal = false;
+      this.creditToDelete = null;
+    }
+  }
+
+  /**
+   * Resets the credit form to its default state.
+   */
+  resetCreditForm(): void {
+    this.newCredit = {
+      name: '',
+      interestRate: 15,
+      maxTerm: 60,
+      termUnit: 'meses'
+    };
+    this.termUnit = 'años';
+    this.editingCredit = null;
   }
 }
