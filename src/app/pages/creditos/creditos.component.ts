@@ -4,7 +4,7 @@ import { jsPDF } from 'jspdf';
 @Component({
   selector: 'app-creditos',
   templateUrl: './creditos.component.html',
-  styleUrl: './creditos.component.scss'
+  styleUrls: ['./creditos.component.scss']
 })
 export class CreditosComponent {
 
@@ -19,8 +19,19 @@ export class CreditosComponent {
   selectedMetodo: any;
   soloNumerosRegex = /^[0-9]*$/;
 
+  contenidoVisible: boolean = false;  
+  mesesSolicitado = null;
+  tipoInteres="";
+
+
   ngOnInit() {
+    // Llenar las listas de créditos, plazos y métodos
     this.creditos = [
+      { name: 'hipotecario', interesA: 0.075, interesM: 0.075 / 12 },
+      { name: 'vip y vis', interesA: 0.0487, interesM: 0.0487 / 12 },
+      { name: 'hipotecario para construccion', interesA: 0.075, interesM: 0.075 / 12 },
+      { name: 'compra de terreno', interesA: 0.075, interesM: 0.075 / 12 },
+
       { name: 'Preciso', interesA: 0.156, interesM: 0.156 / 12 },
       { name: 'Linea Abierta', interesA: 0.13, interesM: 0.13 / 12 },
       { name: 'Hipotecario Vivienda', interesA: 0.1175, interesM: 0.1175 / 12 },
@@ -29,34 +40,7 @@ export class CreditosComponent {
       { name: 'Educación Superior', interesA: 0.09, interesM: 0.09 / 12 }
     ];
 
-    this.plazos = [
-      { name: '6 meses', value: 6 },
-      { name: '7 meses', value: 7 },
-      { name: '8 meses', value: 8 },
-      { name: '9 meses', value: 9 },
-      { name: '10 meses', value: 10 },
-      { name: '11 meses', value: 11 },
-      { name: '12 meses', value: 12 },
-      { name: '18 meses', value: 18 },
-      { name: '24 meses', value: 24 },
-      { name: '30 meses', value: 30 },
-      { name: '36 meses', value: 36 },
-      { name: '42 meses', value: 42 },
-      { name: '48 meses', value: 48 },
-      { name: '54 meses', value: 54 },
-      { name: '60 meses', value: 60 },
-      { name: '66 meses', value: 66 },
-      { name: '72 meses', value: 72 },
-      { name: '78 meses', value: 78 },
-      { name: '84 meses', value: 84 },
-      { name: '90 meses', value: 90 },
-      { name: '96 meses', value: 96 },
-      { name: '102 meses', value: 102 },
-      { name: '108 meses', value: 108 },
-      { name: '114 meses', value: 114 },
-      { name: '120 meses', value: 120 },
-      { name: '126 meses', value: 126 }
-    ];
+
 
     this.metodos = [
       { name: 'Método Frances', code: '1' },
@@ -64,17 +48,28 @@ export class CreditosComponent {
     ];
   }
 
+  // Método para alternar la visibilidad del contenido
+  toggleContenido(nombreCredito: string) {
+    const credito = this.creditos.find(c => c.name === nombreCredito);
+    if (credito) {
+      this.selectedCredito = credito;
+      this.tipoInteres = credito.interes;
+      this.contenidoVisible = true;
+    }
+  }
+  
+
   simularCredito() {
-    if (this.selectedCredito && this.selectedPlazo && this.montoSolicitado) {
+    if (this.montoSolicitado && this.mesesSolicitado) {
       const interesA = this.selectedCredito.interesA;
       const interesM = this.selectedCredito.interesM;
-      const plazo = this.selectedPlazo.value;
+
       const metodo = this.selectedMetodo ? this.selectedMetodo.name : '';
 
       if (metodo === 'Método Frances') {
-        this.cuotas = this.calcularCuotaFrances(this.montoSolicitado, interesA, interesM, plazo);
+        this.cuotas = this.calcularCuotaFrances(this.montoSolicitado, interesA, interesM, this.mesesSolicitado);
       } else if (metodo === 'Método Alemán') {
-        this.cuotas = this.calcularCuotaAleman(this.montoSolicitado, interesA, interesM, plazo);
+        this.cuotas = this.calcularCuotaAleman(this.montoSolicitado, interesA, interesM, this.mesesSolicitado);
       }
     } else {
       alert("Por favor complete todos los campos.");
@@ -168,7 +163,6 @@ export class CreditosComponent {
 
     doc.save('tabla_amortizacion.pdf');
   }
-
 
   handleInputNumbers(event: any) {
     const inputValue = event.target.value;
