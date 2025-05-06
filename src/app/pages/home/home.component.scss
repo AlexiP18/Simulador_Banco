@@ -58,7 +58,7 @@
     right: 0;
     margin: 15px 35px 15px 0;
     padding: 10px;
-    background-color: rgb(91, 103, 172);
+    background-color: rgb(91, 172, 115);
     border-radius: 5px;
 }
 
@@ -73,18 +73,21 @@
 
 .card-container {
     margin: 10px;
-    width: 250px;
+    width: 350px;
 }
 
 #info {
     margin: 20px;
+    text-align: center;
 }
 
 ::ng-deep .p-card {
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    background-color: rgb(243, 243, 243);
-    height: 14rem;
+    background-color: rgb(255, 255, 255);
+    height: 20rem;
 }
+
+
 
 .zoom-container {
     overflow: hidden;
@@ -100,6 +103,12 @@
     transform: scale(1.05);
     border: 10px;
 }
+
+
+
+
+
+
 
 .service-card {
     overflow: hidden;
@@ -139,72 +148,65 @@
 
 .content {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     gap: 2rem;
 }
 
-.hero-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.fade-image-container {
     position: relative;
-    border-radius: 1rem;
+    height: 50vh;
     overflow: hidden;
-}
-
-.hero-image {
-    height: 400px;
-    object-fit: cover;
-    border-radius: 1rem;
-}
-
-.hero-text {
+  }
+  
+  .fade-image {
     position: absolute;
-    bottom: 2rem;
-    left: 2rem;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: fade 1.5s ease-in-out;
+    z-index: 1;
+  }
+  
+  @keyframes fade {
+    from {
+      opacity: 0;
+      background-color: white;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .txt-video {
+    position: absolute;
+    z-index: 2;
+    top: 40%;
+    width: 100%;
     color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-}
-
-.hero-text h3 {
-    font-size: 1.75rem;
-    font-weight: bold;
-    margin: 0;
-    line-height: 1.2;
-}
-
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 0.5rem;
-}
-
-.card-content{
+    margin-top: -220px;
+    font-size: 1rem;
     text-align: left;
-}
-
-.card-content span{
-    font-size: 18px;
-}
-
-.card-content h4{
-    font-size: 20px;
-}
-
-.service-card:hover {
-    transform: translateY(-5px);
-}
-
-@keyframes rebote {
-    0% {
-        transform: translate(-50%, 250);
-    }
-
-    50% {
-        transform: translate(-50%, 70px);
-    }
-
-    100% {
-        transform: translate(-50%, 250);
-    }
-}
+    padding-left: 0rem; /* Ajusta si quieres más espacio del borde */
+  }
+  
+  .txt-video h2 {
+    margin: 0;
+    text-align: left;
+  }
+  
+  

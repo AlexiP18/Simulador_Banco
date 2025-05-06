@@ -36,28 +36,33 @@ export class HomeComponent {
 
   servicios = [
     {
-      title: 'Pago de servicios',
-      subtitle: 'Con tu banca online realiza tus pagos en pocos minutos.',
+      title: 'Seguros',
+      subtitle: 'Encuentra el plan que se ajuste a lo que se necesitas..',
       icon: 'pi pi-money-bill'
     },
     {
-      title: 'Difiere tus Consumos',
-      subtitle: 'Elige agilmente tus consumos y difiere al plazo mas conveniente.',
+      title: 'Prestamo de vivienda',
+      subtitle: 'Descubre la mejor opcion para financiar tu casa soñada..',
       icon: 'pi pi-credit-card'
     },
     {
-      title: 'Paga tu impuesto Predial',
-      subtitle: 'A tiempo con débito de tu cuenta o tu tarjeta de crédito.',
+      title: 'Préstamo',
+      subtitle: 'Solicita tu prestamo y obten una respuesta inmediata.',
       icon: 'pi pi-home'
     },
     {
-      title: 'GPAY',
-      subtitle: 'Agrega tus tarjetas y realiza tus pagos con la billetera de Google.',
+      title: 'Tarjetas de crédito',
+      subtitle: 'Solicita tu nueva tarjeta en pocos pasos.',
       icon: 'pi pi-mobile'
     },
     {
-      title: 'Cuida tu Dinero',
-      subtitle: 'Reposición de hasta $1000 de transacciones no autorizadas.',
+      title: 'Inversiones',
+      subtitle: 'Simula tu inversión con un mejor interés en linea.',
+      icon: 'pi pi-shield'
+    },
+    {
+      title: 'Seguro contra fraudes',
+      subtitle: 'Protege tus cuentas y tarjetas por solo $4,09 al mes.',
       icon: 'pi pi-shield'
     }
   ]
@@ -96,4 +101,22 @@ export class HomeComponent {
   navigateToInversiones(){
     this.router.navigate(['/pages/inversiones']);
   }
+
+
+
+
+
+
+
+
+
+
+  currentImage = 0;
+
+  ngOnInit() {
+    setInterval(() => {
+      this.currentImage = (this.currentImage + 1) % 3;
+    }, 5000); // cambia cada 5 segundos
+  }
+
 }

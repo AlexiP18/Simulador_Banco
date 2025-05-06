@@ -1,46 +1,31 @@
 <app-header></app-header>
 
 <body>
-    <section class="video-container">
-        <video autoplay muted loop>
-            <source src="../../../assets/images/portada.mp4" type="video/mp4">
-        </video>
+    <section class="fade-image-container">
+        <img *ngIf="currentImage === 0" src="assets/images/banner1.jpg" class="fade-image" />
+        <img *ngIf="currentImage === 1" src="assets/images/banner2.jpg" class="fade-image" />
+        <img *ngIf="currentImage === 2" src="assets/images/banner3.jpg" class="fade-image" />
         <div class="txt-video">
-            <h2>Conectando tus metas <br><span>con oportunidades.</span></h2>
-            <i id="bounce-icon" class="pi pi-angle-double-down" style="font-size: 3rem; color: white;"></i>
+          <h2>Descubre nuestro Seguro de<br>Salud ¡económico y fácil de<br>contratar!</h2>
+          <i id="bounce-icon" class="pi pi-angle-double-down" style="font-size: 3rem; color: white;"></i>
         </div>
     </section>
-    <section id="info" class="flex flex-row justify-content-center flex-wrap">
-        <div class="card-container">
-            <p-card header="Compromiso con la Sostenibilidad">
-                <p class="m-0">
-                    Demostramos nuestro compromiso con la sostenibilidad a través de el uso de energías renovables
-                </p>
-            </p-card>
-        </div>
-        <div class="card-container">
-            <p-card header="Contamos con calificación AAA">
-                <p class="m-0">
-                    Con una calificación AAA, destacamos por nuestra solidez financiera.
-                </p>
-            </p-card>
-        </div>
-        <div class="card-container">
-            <p-card header="Reputación Corporativa">
-                <p class="m-0">
-                    Somos el banco más respetado en Ecuador, gracias a nuestra ética y transparencia.
-                </p>
-            </p-card>
-        </div>
-        <div class="card-container">
-            <p-card header="Innovación en Productos">
-                <p class="m-0">
-                    Destacamos por nuestra innovación, ofreciendo productos y servicios adaptados a las necesidades de
-                    nuestros clientes.
-                </p>
-            </p-card>
-        </div>
-    </section>
+    <section class="container m-auto px-4 py-2">
+
+        <h1 class="card-title text-4xl font-bold mb-4">Pensamos en ti.</h1>
+        <p-carousel [value]="servicios" [numVisible]="3">
+            <ng-template pTemplate="item" let-servicio>
+                <div class="service-card" style="cursor: pointer;">
+                    <i [class]="servicio.icon" class="icon"></i>
+                    <h3 [innerHTML]="servicio.title"></h3>
+                    <p>{{ servicio.subtitle }}</p>
+                </div>
+            </ng-template>
+        </p-carousel>
+    </section>  
+    
+
+    <!--
     <section class="container m-2 px-4 py-2">
         <h1 class="card-title text-4xl font-bold">Ponte en marcha.</h1>
         <h2 class="card-subtitle text-gray-600 mb-4">Personas</h2>
@@ -59,10 +44,23 @@
             </div>
         </div>
     </section>
+    --->
+    <section class="fade-image-container">
+        <img *ngIf="currentImage === 0" src="assets/images/banerII1.png" class="fade-image" />
+        <img *ngIf="currentImage === 1" src="assets/images/banerII2.png" class="fade-image" />
+        <img *ngIf="currentImage === 2" src="assets/images/banerII3.png" class="fade-image" />
+        <div class="txt-video">
+        
+          <h2>Descubre nuestro Seguro de<br>Salud ¡económico y fácil de<br>contratar!</h2>
+          <i id="bounce-icon" class="pi pi-angle-double-down" style="font-size: 3rem; color: white;"></i>
+        </div>
+      </section>
+    <!--
     <section class="container m-2 px-4 py-2">
         <h1 class="card-title text-4xl font-bold mb-4">Empieza a crecer.</h1>
         <div class="container">
             <div class="content">
+                
                 <div class="hero-section">
                     <img src="../../../assets/images/negocio.jpg" class="hero-image">
                     <div class="hero-text">
@@ -70,7 +68,7 @@
                         <h3>hizo crecer su negocio.</h3>
                     </div>
                 </div>
-
+                
                 <div class="services-grid">
                     <div class="service-card" style="cursor: pointer;">
                         <div class="card-content">
@@ -115,17 +113,30 @@
             </div>
         </div>
     </section>
-    <section class="container m-2 px-4 py-2">
-        <h1 class="card-title text-4xl font-bold mb-4">Pensamos en ti.</h1>
-        <p-carousel [value]="servicios" [numVisible]="3">
-            <ng-template pTemplate="item" let-servicio>
-                <div class="service-card" style="cursor: pointer;">
-                    <i [class]="servicio.icon" class="icon"></i>
-                    <h3 [innerHTML]="servicio.title"></h3>
-                    <p>{{ servicio.subtitle }}</p>
-                </div>
-            </ng-template>
-        </p-carousel>
+-->
+    <section id="info" class="flex flex-row justify-content-center flex-wrap">
+        <div class="card-container">
+            <p-card header="Certificados bancarios">
+                <p class="m-0">
+                    Obtén un documento certificado de tus cuentas y productos contratados.
+                </p>
+            </p-card>
+        </div>
+        <div class="card-container">
+            <p-card header="Simulador de créditos">
+                <p class="m-0">
+                    Calcula las cuotas del crédito que buscas, en el plazo que prefieras.
+                </p>
+            </p-card>
+        </div>
+        <div class="card-container">
+            <p-card header="Documentos y formularios">
+                <p class="m-0">
+                    Encuentra lo que necesitas para realizar tus tramites.
+                </p>
+            </p-card>
+        </div>
+
     </section>
 </body>
 <app-footer></app-footer>
