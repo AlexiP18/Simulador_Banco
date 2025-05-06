@@ -60,6 +60,10 @@ export class CreditosComponent implements OnInit {
   showDeleteModal = false;
   creditToDelete: CreditType | null = null;
 
+  // Properties for charges modal
+  showChargesModal = false;
+  selectedCreditName = '';
+
   constructor() { }
 
   ngOnInit(): void {
@@ -73,7 +77,12 @@ export class CreditosComponent implements OnInit {
         termUnit: 'meses',
         additionalCharges: [
           { id: 1, name: 'Solca', amount: 200, selected: true },
-          { id: 2, name: 'Seguro', amount: 150, selected: true }
+          { id: 2, name: 'Seguro', amount: 150, selected: true },
+          { id: 3, name: 'Bomberos', amount: 75, selected: true },
+          { id: 4, name: 'Gastos Administrativos', amount: 120, selected: true },
+          { id: 5, name: 'Seguro de Desgravamen', amount: 180, selected: true },
+          { id: 6, name: 'Comisión por Desembolso', amount: 95, selected: true },
+          { id: 7, name: 'Seguro de Vida', amount: 210, selected: true }
         ],
         enabled: true,
         selected: true
@@ -160,6 +169,22 @@ export class CreditosComponent implements OnInit {
   // View additional charges for a specific credit
   viewAdditionalCharges(credit: CreditType): void {
     this.selectedCreditAdditionalCharges = [...credit.additionalCharges];
+    this.selectedCreditName = credit.name;
+    this.showChargesModal = true;
+  }
+
+  /**
+   * Closes the additional charges modal
+   */
+  closeChargesModal(event: Event): void {
+    // Only close if clicking the overlay or close button
+    if (
+      (event.target as HTMLElement).classList.contains('modal-overlay') ||
+      (event.target as HTMLElement).closest('.close-btn')
+    ) {
+      this.showChargesModal = false;
+      event.stopPropagation();
+    }
   }
 
   // Toggle credit selection

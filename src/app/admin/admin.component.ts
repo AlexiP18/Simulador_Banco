@@ -16,4 +16,8 @@ export class AdminComponent {
   navigateToRegistroAsesores() {
     this.router.navigate(['/admin/asesores']);
   }
+
+  navigateToCredito() {
+    this.router.navigate(['/admin/creditos']);
+  }
 }

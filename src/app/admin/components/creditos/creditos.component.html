@@ -253,3 +253,38 @@
     </div>
   </div>
 </div>
+
+<!-- Modal for displaying additional charges -->
+<div class="modal-overlay" *ngIf="showChargesModal" (click)="closeChargesModal($event)">
+  <div class="modal-container charges-modal">
+    <div class="modal-header">
+      <h3>Cobros Adicionales - {{ selectedCreditName }}</h3>
+      <button class="close-btn" (click)="closeChargesModal($event)">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="charges-table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Monto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let charge of selectedCreditAdditionalCharges; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ charge.name }}</td>
+              <td>$ {{ charge.amount }}</td>
+            </tr>
+            <tr *ngIf="selectedCreditAdditionalCharges.length === 0">
+              <td colspan="3" class="no-charges">No hay cobros adicionales para este crédito</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
