@@ -8,21 +8,23 @@
 
 .card-container {
   display: flex;
-  max-width: 600px;
+  max-width: 80%;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+  background-color:  #f3f3fb ;
 }
 
 .performance-section {
-  background-color: #002855;
-  color: white;
+  background-color: performance-section;
+  border-color: #9cbdd1 ;
+  color: rgb(0, 0, 0);
   padding: 24px;
   flex: 1;
 }
 
 .interest-section {
-  background-color: white;
+  background-color:  #569b6b;
   padding: 24px;
   flex: 1;
   display: flex;
@@ -54,7 +56,7 @@
 .interest-rate {
   font-size: 32px;
   font-weight: bold;
-  color: #002855;
+  color: #4ea99c;
   margin-top: 8px;
 }
 

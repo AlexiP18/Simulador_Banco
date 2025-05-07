@@ -4,29 +4,44 @@
         <!-- Producto 1 -->
         <div class="producto-card nuevo">
             <h3>hipotecario</h3>
-            <p>Recibe efectivo desde tu tarjeta de crédito</p>
+            <p>Solicita tu crédito hipotecario con una tasa desde 7,50%. Te financiamos hasta el 80% de una vivienda. Plazos flexibles desde 3 hasta 20 años. 
+            </p>
             <button type="button" (click)="toggleContenido('hipotecario')">Avance efectivo</button>
         </div>
     
         <!-- Producto 2 -->
         <div class="producto-card">
             <h3>vip y vis</h3>
-            <p>Invierte en un depósito a plazo en tan solo tres pasos</p>
+            <p>Crédito de Vivienda de Interés Público y Social (VIP y VIS) de Banco Pichincha, 4,87% de interés con el 100% de financiamiento. ¡Solicitalo ya!</p>
             <button type="button" (click)="toggleContenido('vip y vis')">Invertir</button>
         </div>
     
         <!-- Producto 2 -->
         <div class="producto-card">
-            <h3>hipotecario para construccion</h3>
-            <p>Invierte en un depósito a plazo en tan solo tres pasos</p>
-            <button type="button" (click)="toggleContenido('hipotecario para construccion')">Invertir</button>
+            <h3>credito para consultorios, oficinas y locales</h3>
+            <p>Invierte hoy en la oficina, consultorio, estudio o local comercial para tu negocio con financiación hasta por 7 años. Pide tu crédito ya. 
+            </p>
+            <p>12,23% de tasa de interés.</p>
+            <button type="button" (click)="toggleContenido('credito para consultorios, oficinas y locales')">Invertir</button>
         </div>
     
         <!-- Producto 2 -->
         <div class="producto-card">
-            <h3>compra de terreno</h3>
-            <p>Invierte en un depósito a plazo en tan solo tres pasos</p>
-            <button type="button" (click)="toggleContenido('compra de terreno')">Invertir</button>
+            <h3>creditos vehiculos livianos</h3>
+            <p>Tu crédito vehicular con las mejores condiciones: entrada desde 20%, monto hasta 150.000, plazo hasta 72 meses. 
+                Solicitalo en línea. 
+            </p>
+            <p>15,60% tasa de interés.</p>
+            <button type="button" (click)="toggleContenido('creditos vehiculos livianos')">Invertir</button>
+        </div>
+
+        <!-- Producto 2 -->
+        <div class="producto-card">
+            <h3>credito educativo</h3>
+            <p>¡Crece profesionalmente! Nosotros te ayudamos con financiación para tus estudios pregrado o postgrado. Solicita tu crédito educativo. 
+            </p>
+            <p>9% de tasa de interés</p>
+            <button type="button" (click)="toggleContenido('credito educativo')">Invertir</button>
         </div>
     </div>
 </div>
@@ -55,7 +70,13 @@
                 <label class="font-semibold ">Método para pagar los intereses:</label>
                 <p-dropdown [options]="metodos" [(ngModel)]="selectedMetodo" optionLabel="name" placeholder="Seleccione una opción"></p-dropdown>
             </div>
-            <p-button label="Simular" (click)="simularCredito()"></p-button>
+
+            <button type="button" 
+                    style="background-color: #fbdb04; color: #0e2258; border: none; padding: 10px 15px; cursor: pointer;" 
+                    (click)="simularCredito()">
+            Invertir
+            </button>
+
         </div>
         <p-divider layout="vertical"></p-divider>
         <div style="width: 60%;">
@@ -84,7 +105,12 @@
                     </ng-template>
                 </p-table>
             </div>
-            <p-button label="Descargar Tabla" (click)="descargarTabla()" [disabled]="cuotas.length === 0"></p-button>
+
+            <button type="button" 
+                    style="background-color: #fbdb04; color: #0e2258; border: none; padding: 10px 15px; cursor: pointer;" 
+                    (click)="descargarTabla()" >
+                    Descargar Tabla
+            </button>
         </div>
     </div>
   </div>

@@ -29,15 +29,9 @@ export class CreditosComponent {
     this.creditos = [
       { name: 'hipotecario', interesA: 0.075, interesM: 0.075 / 12 },
       { name: 'vip y vis', interesA: 0.0487, interesM: 0.0487 / 12 },
-      { name: 'hipotecario para construccion', interesA: 0.075, interesM: 0.075 / 12 },
-      { name: 'compra de terreno', interesA: 0.075, interesM: 0.075 / 12 },
-
-      { name: 'Preciso', interesA: 0.156, interesM: 0.156 / 12 },
-      { name: 'Linea Abierta', interesA: 0.13, interesM: 0.13 / 12 },
-      { name: 'Hipotecario Vivienda', interesA: 0.1175, interesM: 0.1175 / 12 },
-      { name: 'Vivienda de Interes Público', interesA: 0.0487, interesM: 0.0487 / 12 },
-      { name: 'Vivienda de Interes Social', interesA: 0.0487, interesM: 0.0487 / 12 },
-      { name: 'Educación Superior', interesA: 0.09, interesM: 0.09 / 12 }
+      { name: 'credito para consultorios, oficinas y locales', interesA: 0.1223, interesM: 0.1223 / 12 },
+      { name: 'creditos vehiculos livianos', interesA: 0.156, interesM: 0.156 / 12 },
+      { name: 'credito educativo', interesA: 0.09, interesM: 0.09 / 12 },
     ];
 
 
