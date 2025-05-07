@@ -47,6 +47,7 @@
                 <label for="select-all"></label>
               </div>
             </th>
+            <th style="width: 10%;">ID</th> <!-- Nueva columna ID -->
             <th style="width: 30%;">Nombre</th>
             <th style="width: 20%;">Cargo</th>
             <th style="width: 100px;">Estado</th>
@@ -62,11 +63,12 @@
                 <label [for]="'row'+i"></label>
               </div>
             </td>
-            <td>{{ asesor.nombre }}</td>
+            <td>{{ asesor.id }}</td> <!-- Mostrar el ID del asesor -->
+            <td>{{ asesor.nombre }} {{ asesor.apellido }}</td>
             <td>{{ asesor.cargo }}</td>
             <td>
               <label class="switch">
-                <input type="checkbox" [(ngModel)]="asesor.activo" />
+                <input type="checkbox" [(ngModel)]="asesor.activo" (change)="actualizarEstado(asesor)" />
                 <span class="slider round"></span>
               </label>
             </td>
@@ -127,8 +129,9 @@
       </div>
       <div class="modal-body">
         <p>¿Está seguro que desea eliminar este asesor crediticio?</p>
-        <p *ngIf="asesorAEliminar !== null">
-          <strong>{{ asesores[asesorAEliminar].nombre }}</strong> - {{ asesores[asesorAEliminar].cargo }}
+        <p *ngIf="asesorAEliminar !== null && asesores[asesorAEliminar]">
+          <strong>ID: {{ asesores[asesorAEliminar].id }}</strong><br>
+          <strong>{{ asesores[asesorAEliminar].nombre }} {{ asesores[asesorAEliminar].apellido }}</strong> - {{ asesores[asesorAEliminar].cargo }}
         </p>
       </div>
       <div class="modal-footer">

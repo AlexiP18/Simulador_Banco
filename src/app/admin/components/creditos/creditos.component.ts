@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CreditosService } from '../../services/creditos.service';
 
 interface CreditType {
   id: number;
@@ -64,147 +65,149 @@ export class CreditosComponent implements OnInit {
   showChargesModal = false;
   selectedCreditName = '';
 
-  constructor() { }
+  constructor(private creditosService: CreditosService) { }
 
   ngOnInit(): void {
-    // Initialize with sample data (original 3 credit types)
-    this.creditTypes = [
-      {
-        id: 1,
-        name: 'Educativo',
-        interestRate: 18,
-        maxTerm: 136,
-        termUnit: 'meses',
-        additionalCharges: [
-          { id: 1, name: 'Solca', amount: 200, selected: true },
-          { id: 2, name: 'Seguro', amount: 150, selected: true },
-          { id: 3, name: 'Bomberos', amount: 75, selected: true },
-          { id: 4, name: 'Gastos Administrativos', amount: 120, selected: true },
-          { id: 5, name: 'Seguro de Desgravamen', amount: 180, selected: true },
-          { id: 6, name: 'Comisión por Desembolso', amount: 95, selected: true },
-          { id: 7, name: 'Seguro de Vida', amount: 210, selected: true }
-        ],
-        enabled: true,
-        selected: true
-      },
-      {
-        id: 2,
-        name: 'Emprendimiento',
-        interestRate: 15,
-        maxTerm: 200,
-        termUnit: 'meses',
-        additionalCharges: [
-          { id: 1, name: 'Solca', amount: 200, selected: true },
-          { id: 3, name: 'Bomberos', amount: 75, selected: true }
-        ],
-        enabled: false,
-        selected: true
-      },
-      {
-        id: 3,
-        name: 'Microempresa',
-        interestRate: 10,
-        maxTerm: 180,
-        termUnit: 'meses',
-        additionalCharges: [
-          { id: 1, name: 'Solca', amount: 200, selected: true },
-          { id: 3, name: 'Bomberos', amount: 75, selected: true },
-          { id: 4, name: 'Seguro', amount: 500, selected: true }
-        ],
-        enabled: true,
-        selected: true
-      },
-      // Agregar más filas para demostrar el scroll vertical
-      {
-        id: 4,
-        name: 'Crédito Hipotecario',
-        interestRate: 8.5,
-        maxTerm: 20,
-        termUnit: 'años',
-        additionalCharges: [
-          { id: 1, name: 'Avalúo', amount: 350, selected: true },
-          { id: 2, name: 'Gastos Legales', amount: 450, selected: true }
-        ],
-        enabled: true,
-        selected: true
-      },
-      {
-        id: 5,
-        name: 'Crédito Automotriz',
-        interestRate: 12.75,
-        maxTerm: 72,
-        termUnit: 'meses',
-        additionalCharges: [
-          { id: 1, name: 'Seguro del Vehículo', amount: 650, selected: true },
-          { id: 2, name: 'Comisión', amount: 200, selected: true }
-        ],
-        enabled: true,
-        selected: true
-      },
-      {
-        id: 6,
-        name: 'Crédito de Consumo',
-        interestRate: 16.25,
-        maxTerm: 48,
-        termUnit: 'meses',
-        additionalCharges: [
-          { id: 1, name: 'Seguro', amount: 125, selected: true }
-        ],
-        enabled: true,
-        selected: true
-      },
-      {
-        id: 7,
-        name: 'Crédito Agrícola',
-        interestRate: 9.3,
-        maxTerm: 10,
-        termUnit: 'años',
-        additionalCharges: [
-          { id: 1, name: 'Seguro Agrícola', amount: 300, selected: true },
-          { id: 2, name: 'Estudio Técnico', amount: 250, selected: true }
-        ],
-        enabled: false,
-        selected: true
-      },
-      {
-        id: 8,
-        name: 'Microcrédito',
-        interestRate: 22.5,
-        maxTerm: 36,
-        termUnit: 'meses',
-        additionalCharges: [
-          { id: 1, name: 'Capacitación', amount: 50, selected: true }
-        ],
-        enabled: true,
-        selected: true
-      },
-      {
-        id: 9,
-        name: 'Crédito para PYMES',
-        interestRate: 14.8,
-        maxTerm: 8,
-        termUnit: 'años',
-        additionalCharges: [
-          { id: 1, name: 'Estudio Financiero', amount: 480, selected: true },
-          { id: 2, name: 'Seguro', amount: 350, selected: true }
-        ],
-        enabled: true,
-        selected: true
-      },
-      {
-        id: 10,
-        name: 'Crédito para Vivienda',
-        interestRate: 7.9,
-        maxTerm: 25,
-        termUnit: 'años',
-        additionalCharges: [
-          { id: 1, name: 'Gastos Notariales', amount: 400, selected: true },
-          { id: 2, name: 'Seguro de Inmueble', amount: 550, selected: true }
-        ],
-        enabled: true,
-        selected: true
-      }
-    ];
+    this.cargarCreditos();
+
+    // Initialize with sample data if needed (you can keep this for development)
+    // this.creditTypes = [
+    //   {
+    //     id: 1,
+    //     name: 'Educativo',
+    //     interestRate: 18,
+    //     maxTerm: 136,
+    //     termUnit: 'meses',
+    //     additionalCharges: [
+    //       { id: 1, name: 'Solca', amount: 200, selected: true },
+    //       { id: 2, name: 'Seguro', amount: 150, selected: true },
+    //       { id: 3, name: 'Bomberos', amount: 75, selected: true },
+    //       { id: 4, name: 'Gastos Administrativos', amount: 120, selected: true },
+    //       { id: 5, name: 'Seguro de Desgravamen', amount: 180, selected: true },
+    //       { id: 6, name: 'Comisión por Desembolso', amount: 95, selected: true },
+    //       { id: 7, name: 'Seguro de Vida', amount: 210, selected: true }
+    //     ],
+    //     enabled: true,
+    //     selected: true
+    //   },
+    //   {
+    //     id: 2,
+    //     name: 'Emprendimiento',
+    //     interestRate: 15,
+    //     maxTerm: 200,
+    //     termUnit: 'meses',
+    //     additionalCharges: [
+    //       { id: 1, name: 'Solca', amount: 200, selected: true },
+    //       { id: 3, name: 'Bomberos', amount: 75, selected: true }
+    //     ],
+    //     enabled: false,
+    //     selected: true
+    //   },
+    //   {
+    //     id: 3,
+    //     name: 'Microempresa',
+    //     interestRate: 10,
+    //     maxTerm: 180,
+    //     termUnit: 'meses',
+    //     additionalCharges: [
+    //       { id: 1, name: 'Solca', amount: 200, selected: true },
+    //       { id: 3, name: 'Bomberos', amount: 75, selected: true },
+    //       { id: 4, name: 'Seguro', amount: 500, selected: true }
+    //     ],
+    //     enabled: true,
+    //     selected: true
+    //   },
+    //   // Agregar más filas para demostrar el scroll vertical
+    //   {
+    //     id: 4,
+    //     name: 'Crédito Hipotecario',
+    //     interestRate: 8.5,
+    //     maxTerm: 20,
+    //     termUnit: 'años',
+    //     additionalCharges: [
+    //       { id: 1, name: 'Avalúo', amount: 350, selected: true },
+    //       { id: 2, name: 'Gastos Legales', amount: 450, selected: true }
+    //     ],
+    //     enabled: true,
+    //     selected: true
+    //   },
+    //   {
+    //     id: 5,
+    //     name: 'Crédito Automotriz',
+    //     interestRate: 12.75,
+    //     maxTerm: 72,
+    //     termUnit: 'meses',
+    //     additionalCharges: [
+    //       { id: 1, name: 'Seguro del Vehículo', amount: 650, selected: true },
+    //       { id: 2, name: 'Comisión', amount: 200, selected: true }
+    //     ],
+    //     enabled: true,
+    //     selected: true
+    //   },
+    //   {
+    //     id: 6,
+    //     name: 'Crédito de Consumo',
+    //     interestRate: 16.25,
+    //     maxTerm: 48,
+    //     termUnit: 'meses',
+    //     additionalCharges: [
+    //       { id: 1, name: 'Seguro', amount: 125, selected: true }
+    //     ],
+    //     enabled: true,
+    //     selected: true
+    //   },
+    //   {
+    //     id: 7,
+    //     name: 'Crédito Agrícola',
+    //     interestRate: 9.3,
+    //     maxTerm: 10,
+    //     termUnit: 'años',
+    //     additionalCharges: [
+    //       { id: 1, name: 'Seguro Agrícola', amount: 300, selected: true },
+    //       { id: 2, name: 'Estudio Técnico', amount: 250, selected: true }
+    //     ],
+    //     enabled: false,
+    //     selected: true
+    //   },
+    //   {
+    //     id: 8,
+    //     name: 'Microcrédito',
+    //     interestRate: 22.5,
+    //     maxTerm: 36,
+    //     termUnit: 'meses',
+    //     additionalCharges: [
+    //       { id: 1, name: 'Capacitación', amount: 50, selected: true }
+    //     ],
+    //     enabled: true,
+    //     selected: true
+    //   },
+    //   {
+    //     id: 9,
+    //     name: 'Crédito para PYMES',
+    //     interestRate: 14.8,
+    //     maxTerm: 8,
+    //     termUnit: 'años',
+    //     additionalCharges: [
+    //       { id: 1, name: 'Estudio Financiero', amount: 480, selected: true },
+    //       { id: 2, name: 'Seguro', amount: 350, selected: true }
+    //     ],
+    //     enabled: true,
+    //     selected: true
+    //   },
+    //   {
+    //     id: 10,
+    //     name: 'Crédito para Vivienda',
+    //     interestRate: 7.9,
+    //     maxTerm: 25,
+    //     termUnit: 'años',
+    //     additionalCharges: [
+    //       { id: 1, name: 'Gastos Notariales', amount: 400, selected: true },
+    //       { id: 2, name: 'Seguro de Inmueble', amount: 550, selected: true }
+    //     ],
+    //     enabled: true,
+    //     selected: true
+    //   }
+    // ];
 
     // Show the first credit's additional charges by default
     this.selectedCreditAdditionalCharges = [
@@ -212,6 +215,17 @@ export class CreditosComponent implements OnInit {
       { id: 2, name: 'Bomberos', amount: 75, selected: true },
       { id: 3, name: 'Seguro', amount: 500, selected: true }
     ];
+  }
+
+  // Método para cargar tipos de crédito desde el backend
+  cargarCreditos(): void {
+    this.creditosService.getCreditos().subscribe(response => {
+      if (response && response.data) {
+        this.creditTypes = response.data;
+      }
+    }, error => {
+      console.error('Error al cargar los créditos:', error);
+    });
   }
 
   // Add a new credit type
@@ -224,34 +238,49 @@ export class CreditosComponent implements OnInit {
 
     if (this.editingCredit) {
       // Update existing credit
-      this.editingCredit.name = this.newCredit.name;
-      this.editingCredit.interestRate = this.newCredit.interestRate;
-      this.editingCredit.maxTerm = this.newCredit.maxTerm;
-      this.editingCredit.termUnit = this.newCredit.termUnit;
-
-      // Update additional charges if they were modified
-      this.editingCredit.additionalCharges = [...this.selectedCreditAdditionalCharges];
-
-      // Clear editing state
-      this.editingCredit = null;
-    } else {
-      // Add new credit
-      const newId = this.creditTypes.length > 0 ? Math.max(...this.creditTypes.map(c => c.id)) + 1 : 1;
-
-      this.creditTypes.push({
-        id: newId,
+      const creditoActualizado = {
+        id: this.editingCredit.id,
         name: this.newCredit.name,
         interestRate: this.newCredit.interestRate,
         maxTerm: this.newCredit.maxTerm,
         termUnit: this.newCredit.termUnit,
-        additionalCharges: [...this.selectedCreditAdditionalCharges],
-        enabled: true,
-        selected: true
-      });
+        additionalCharges: this.selectedCreditAdditionalCharges,
+        enabled: this.editingCredit.enabled
+      };
+
+      this.creditosService.updateCredito(creditoActualizado).subscribe(
+        response => {
+          this.cargarCreditos();
+          // Clear editing state
+          this.editingCredit = null;
+          this.resetCreditForm();
+        },
+        error => {
+          console.error('Error al actualizar el crédito:', error);
+        }
+      );
+    } else {
+      // Add new credit
+      const nuevoCredito = {
+        name: this.newCredit.name,
+        interestRate: this.newCredit.interestRate,
+        maxTerm: this.newCredit.maxTerm,
+        termUnit: this.newCredit.termUnit,
+        additionalCharges: this.selectedCreditAdditionalCharges,
+        enabled: true
+      };
+
+      this.creditosService.addCredito(nuevoCredito).subscribe(
+        response => {
+          this.cargarCreditos();
+          this.resetCreditForm();
+        },
+        error => {
+          console.error('Error al agregar el crédito:', error);
+        }
+      );
     }
 
-    // Reset form
-    this.resetCreditForm();
     // Reset additional charges
     this.selectedCreditAdditionalCharges = [];
   }
@@ -284,7 +313,21 @@ export class CreditosComponent implements OnInit {
 
   // Toggle credit enabled status
   toggleCreditEnabled(credit: CreditType): void {
-    credit.enabled = !credit.enabled;
+    if (credit.id) {
+      credit.enabled = !credit.enabled;
+      const estadoActualizado = { id: credit.id, enabled: credit.enabled };
+
+      this.creditosService.updateEstadoCredito(estadoActualizado).subscribe(
+        response => {
+          console.log(`Estado del crédito con ID ${credit.id} actualizado a ${credit.enabled}`);
+        },
+        error => {
+          console.error('Error al actualizar el estado del crédito:', error);
+          // Revert the change if there was an error
+          credit.enabled = !credit.enabled;
+        }
+      );
+    }
   }
 
   // Toggle all credits selection
@@ -661,21 +704,20 @@ export class CreditosComponent implements OnInit {
    * Confirms credit deletion after modal confirmation
    */
   confirmDeleteCredit(): void {
-    if (this.creditToDelete) {
-      const index = this.creditTypes.findIndex(c => c.id === this.creditToDelete!.id);
-      if (index > -1) {
-        this.creditTypes.splice(index, 1);
-      }
-
-      // If the deleted credit was being edited, clear the editing state
-      if (this.editingCredit && this.editingCredit.id === this.creditToDelete.id) {
-        this.editingCredit = null;
-        this.resetCreditForm();
-      }
-
-      // Close the modal
-      this.showDeleteModal = false;
-      this.creditToDelete = null;
+    if (this.creditToDelete && this.creditToDelete.id) {
+      this.creditosService.deleteCredito(this.creditToDelete.id).subscribe(
+        response => {
+          this.cargarCreditos();
+          // Close the modal
+          this.showDeleteModal = false;
+          this.creditToDelete = null;
+        },
+        error => {
+          console.error('Error al eliminar el crédito:', error);
+          this.showDeleteModal = false;
+          this.creditToDelete = null;
+        }
+      );
     }
   }
 

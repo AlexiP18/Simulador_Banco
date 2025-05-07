@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef, OnInit, AfterViewInit } from '@angular/core';
 import { environment } from '../../../../environments/environment';
+import { CreditosService } from '../../services/creditos.service';
 
 declare var google: any;
 
@@ -19,8 +20,17 @@ export class InfoInstitucionalComponent implements OnInit, AfterViewInit {
   selectedSocial: string = '';
   socialLink: string = '';
 
-  customChips: { name: string; icon: string; link: string }[] = []; // Mantén el arreglo vacío
+  customChips: { name: string; icon: string; link: string }[] = [];
   isAddChipModalOpen: boolean = false;
+
+  locationAddress: string = '';
+  latitude: number | null = null;
+  longitude: number | null = null;
+  mapLoaded: boolean = false;
+  map: any;
+  marker: any;
+
+  informacionInstitucional: any = {}; // Objeto para almacenar la información institucional
 
   availableIcons = [
     { name: 'Facebook', class: 'fab fa-facebook-f' },
@@ -29,28 +39,85 @@ export class InfoInstitucionalComponent implements OnInit, AfterViewInit {
     { name: 'Youtube', class: 'fab fa-youtube' },
     { name: 'LinkedIn', class: 'fab fa-linkedin-in' },
     { name: 'Whatsapp', class: 'fab fa-whatsapp' },
-    { name: 'Otro', class: 'fas fa-link' }
+    { name: 'TikTok', class: 'fab fa-tiktok' },
+    { name: 'Pinterest', class: 'fab fa-pinterest' },
+    { name: 'Telegram', class: 'fab fa-telegram' },
   ];
-  selectedIcon: string = this.availableIcons[0].class;
-  customLink: string = '';
 
-  searchQuery: string = '';
-  filteredIcons = [...this.availableIcons];
+  filteredIcons = [...this.availableIcons]; // Inicializar con todos los íconos disponibles
+  searchQuery: string = ''; // Inicializar como cadena vacía
+  selectedIconClass: string = ''; // Para almacenar la clase del ícono seleccionado
 
-  // Propiedades para geolocalización
-  locationAddress: string = '';
-  latitude: number | null = null;
-  longitude: number | null = null;
-  mapLoaded: boolean = false;
-  map: any;
-  marker: any;
+  constructor(private creditosService: CreditosService) {}
 
   ngOnInit(): void {
-    // Inicialización del componente
+    this.loadInformacionInstitucional();
   }
 
   ngAfterViewInit(): void {
     this.loadGoogleMapsScript();
+  }
+
+  loadInformacionInstitucional(): void {
+    this.creditosService.getInformacionInstitucional().subscribe(
+      (response) => {
+        if (response && response.data) { // Acceder directamente a response.data
+          this.informacionInstitucional = response.data[0]; // Asumimos que es un array y tomamos el primer elemento
+          this.populateFormFields();
+        } else {
+          console.error('Error en la respuesta del servidor:', response);
+          alert('No se pudo cargar la información institucional.');
+        }
+      },
+      (error) => {
+        console.error('Error al cargar la información institucional:', error);
+        alert('Ocurrió un error al intentar cargar la información institucional.');
+      }
+    );
+  }
+
+  populateFormFields(): void {
+    this.logoSrc = this.informacionInstitucional.logo || null;
+    this.phoneNumber = this.informacionInstitucional.contacto_telefonico || '';
+    this.locationAddress = this.informacionInstitucional.direccion || '';
+    this.latitude = this.informacionInstitucional.latitud || null;
+    this.longitude = this.informacionInstitucional.longitud || null;
+    // Asignar otros campos del formulario
+    const nombreInput = document.getElementById('nombre') as HTMLInputElement;
+    const descripcionTextarea = document.getElementById('descripcion') as HTMLTextAreaElement;
+    if (nombreInput) nombreInput.value = this.informacionInstitucional.nombre || '';
+    if (descripcionTextarea) descripcionTextarea.value = this.informacionInstitucional.descripcion || '';
+  }
+
+  saveInformacionInstitucional(): void {
+    const nombreInput = document.getElementById('nombre') as HTMLInputElement;
+    const descripcionTextarea = document.getElementById('descripcion') as HTMLTextAreaElement;
+
+    const data = {
+      nombre: nombreInput?.value || '',
+      descripcion: descripcionTextarea?.value || '',
+      logo: this.logoSrc,
+      contacto_telefonico: this.phoneNumber,
+      direccion: this.locationAddress,
+      latitud: this.latitude,
+      longitud: this.longitude,
+      // Agregar otros campos según sea necesario
+    };
+
+    this.creditosService.updateInformacionInstitucional(data).subscribe(
+      (response) => {
+        if (response.status === 'success') {
+          alert('Información institucional actualizada correctamente.');
+        } else {
+          console.error('Error en la respuesta del servidor:', response);
+          alert('No se pudo actualizar la información institucional.');
+        }
+      },
+      (error) => {
+        console.error('Error al actualizar la información institucional:', error);
+        alert('Ocurrió un error al intentar actualizar la información institucional.');
+      }
+    );
   }
 
   loadGoogleMapsScript(): void {
@@ -260,13 +327,24 @@ export class InfoInstitucionalComponent implements OnInit, AfterViewInit {
   }
 
   filterIcons(): void {
+    if (!this.searchQuery) {
+      this.filteredIcons = [...this.availableIcons]; // Restaurar todos los íconos si no hay búsqueda
+      return;
+    }
+
     this.filteredIcons = this.availableIcons.filter(icon =>
       icon.name.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
   }
 
   selectIcon(icon: { name: string; class: string }): void {
-    this.selectedIcon = icon.class;
+    if (!icon) {
+      console.error('Ícono no válido seleccionado.');
+      return;
+    }
+
+    this.selectedIconClass = icon.class;
     this.searchQuery = icon.name;
   }
 }
+

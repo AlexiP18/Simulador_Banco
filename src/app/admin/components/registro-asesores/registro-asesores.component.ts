@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CreditosService } from '../../services/creditos.service';
 
 interface Asesor {
+  id?: number | null;
   nombre: string;
   apellido: string;
   cargo: string;
@@ -43,29 +45,42 @@ export class RegistroAsesoresComponent {
   mostrarModalEliminar: boolean = false;
   asesorAEliminar: number | null = null;
 
+  constructor(private creditosService: CreditosService) {
+    this.cargarAsesores();
+  }
+
+  // Método para cargar asesores desde el backend
+  cargarAsesores(): void {
+    this.creditosService.getAsesores().subscribe(response => {
+      this.asesores = (response.data || []).map((asesor: any) => ({
+        ...asesor,
+        activo: asesor.enabled === 1 // Convertir 'enabled' a booleano
+      }));
+    });
+  }
+
   // Método para guardar o actualizar un asesor
   guardar(): void {
     if (this.asesorForm.nombre && this.asesorForm.apellido && this.asesorForm.cargo) {
-      const nuevoAsesor: Asesor = {
-        nombre: `${this.asesorForm.nombre} ${this.asesorForm.apellido}`,
-        apellido: this.asesorForm.apellido || '',
-        cargo: this.asesorForm.cargo || '',
-        activo: this.asesorForm.activo || false,
-        seleccionado: false
+      const nuevoAsesor = {
+        id: this.modoEdicion ? this.asesores[this.indiceEdicion].id : null,
+        nombre: this.asesorForm.nombre,
+        apellido: this.asesorForm.apellido,
+        cargo: this.asesorForm.cargo,
+        enabled: this.asesorForm.activo ? 1 : 0
       };
 
-      if (this.modoEdicion && this.indiceEdicion > -1) {
-        // Actualizar asesor existente
-        this.asesores[this.indiceEdicion] = nuevoAsesor;
-        this.modoEdicion = false;
-        this.indiceEdicion = -1;
+      if (this.modoEdicion) {
+        this.creditosService.updateAsesor(nuevoAsesor).subscribe(() => {
+          this.cargarAsesores();
+          this.resetForm();
+        });
       } else {
-        // Añadir nuevo asesor
-        this.asesores.push(nuevoAsesor);
+        this.creditosService.addAsesor(nuevoAsesor).subscribe(() => {
+          this.cargarAsesores();
+          this.resetForm();
+        });
       }
-
-      // Limpiar formulario
-      this.resetForm();
     }
   }
 
@@ -85,23 +100,56 @@ export class RegistroAsesoresComponent {
 
   // Método para eliminar un asesor (ahora muestra el modal)
   eliminar(index: number): void {
-    this.asesorAEliminar = index;
-    this.mostrarModalEliminar = true;
+    const asesor = this.asesores[index];
+    console.log('Intentando eliminar asesor:', asesor);
+
+    if (asesor && asesor.id !== undefined && asesor.id !== null) {
+      console.log('ID del asesor a eliminar:', asesor.id, 'tipo:', typeof asesor.id);
+      this.asesorAEliminar = index;
+      this.mostrarModalEliminar = true;
+    } else {
+      console.error('No se puede eliminar asesor sin ID válido. Asesor:', asesor);
+    }
   }
 
   // Método para confirmar la eliminación
   confirmarEliminar(): void {
     if (this.asesorAEliminar !== null) {
-      // Eliminar el asesor del array
-      this.asesores.splice(this.asesorAEliminar, 1);
-
-      // Si estábamos editando el asesor que se eliminó, limpiamos el formulario
-      if (this.modoEdicion && this.indiceEdicion === this.asesorAEliminar) {
-        this.resetForm();
+      const asesor = this.asesores[this.asesorAEliminar];
+      if (!asesor) {
+        console.error('Asesor no encontrado en el índice:', this.asesorAEliminar);
+        this.cancelarEliminar();
+        return;
       }
 
-      // Cerrar el modal
-      this.cancelarEliminar();
+      const id = asesor.id;
+      console.log('Confirmando eliminación de asesor con ID:', id, 'tipo:', typeof id);
+
+      if (id !== undefined && id !== null) {
+        // Convertir explícitamente el ID a número si es necesario
+        const numericId = Number(id);
+
+        if (!isNaN(numericId)) {
+          console.log('Enviando solicitud de eliminación para ID:', numericId);
+          this.creditosService.deleteAsesor(numericId).subscribe(
+            response => {
+              console.log('Respuesta del servidor:', response);
+              this.cargarAsesores();
+              this.cancelarEliminar();
+            },
+            error => {
+              console.error('Error al eliminar asesor:', error);
+              this.cancelarEliminar();
+            }
+          );
+        } else {
+          console.error('ID no es un número válido:', id);
+          this.cancelarEliminar();
+        }
+      } else {
+        console.error('No se puede eliminar asesor con ID inválido');
+        this.cancelarEliminar();
+      }
     }
   }
 
@@ -133,5 +181,17 @@ export class RegistroAsesoresComponent {
     };
     this.modoEdicion = false;
     this.indiceEdicion = -1;
+  }
+
+  // Método para actualizar el estado del asesor
+  actualizarEstado(asesor: Asesor): void {
+    if (asesor.id) {
+      const estadoActualizado = { id: asesor.id, activo: asesor.activo };
+      this.creditosService.updateEstadoAsesor(estadoActualizado).subscribe(() => {
+        console.log(`Estado del asesor con ID ${asesor.id} actualizado a ${asesor.activo}`);
+      });
+    } else {
+      console.error('No se puede actualizar el estado de un asesor sin ID');
+    }
   }
 }
