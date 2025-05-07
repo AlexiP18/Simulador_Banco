@@ -1,9 +1,41 @@
 <app-header></app-header>
-<section class="banner">
-    <h1>Simulador de Crédito</h1>
-    <p>Calcula tu cuota mensual basada en el valor del préstamo que deseas solicitar.</p>
-</section>
+<div class="productos-container">
+    <div class="productos-grid">
+        <!-- Producto 1 -->
+        <div class="producto-card nuevo">
+            <h3>hipotecario</h3>
+            <p>Recibe efectivo desde tu tarjeta de crédito</p>
+            <button type="button" (click)="toggleContenido('hipotecario')">Avance efectivo</button>
+        </div>
+    
+        <!-- Producto 2 -->
+        <div class="producto-card">
+            <h3>vip y vis</h3>
+            <p>Invierte en un depósito a plazo en tan solo tres pasos</p>
+            <button type="button" (click)="toggleContenido('vip y vis')">Invertir</button>
+        </div>
+    
+        <!-- Producto 2 -->
+        <div class="producto-card">
+            <h3>hipotecario para construccion</h3>
+            <p>Invierte en un depósito a plazo en tan solo tres pasos</p>
+            <button type="button" (click)="toggleContenido('hipotecario para construccion')">Invertir</button>
+        </div>
+    
+        <!-- Producto 2 -->
+        <div class="producto-card">
+            <h3>compra de terreno</h3>
+            <p>Invierte en un depósito a plazo en tan solo tres pasos</p>
+            <button type="button" (click)="toggleContenido('compra de terreno')">Invertir</button>
+        </div>
+    </div>
+</div>
+
+
+  
+
 <section class="content">
+  <div *ngIf="contenidoVisible">
     <div class="flex gap-5 mb-3">
         <div class="flex content-datos flex-column" style="width: 30%;">
             <h2 class="flex justify-content-center">Datos del Crédito</h2>
@@ -16,8 +48,8 @@
                 <input type="text" pInputText placeholder="Ej.$10000" maxlength="10" (input)="handleInputNumbers($event)" [(ngModel)]="montoSolicitado"/>
             </div>
             <div class="flex align-items-left gap-3 mb-3 flex-column">
-                <label class="font-semibold w-15rem">Plazo a Pagar (Meses):</label>
-                <p-dropdown [options]="plazos" [(ngModel)]="selectedPlazo" optionLabel="name" placeholder="Selecciona tu Plazo"></p-dropdown>
+                <label class="font-semibold w-15rem">Cantidad de Meses:</label>
+                <input type="text" pInputText placeholder="Ej. 12" maxlength="10" (input)="handleInputNumbers($event)" [(ngModel)]="mesesSolicitado"/>
             </div>
             <div class="flex align-items-left gap-3 mb-3 flex-column">
                 <label class="font-semibold ">Método para pagar los intereses:</label>
@@ -28,7 +60,7 @@
         <p-divider layout="vertical"></p-divider>
         <div style="width: 60%;">
             <h2 class="flex justify-content-center">Tabla de Amortización</h2>
-            <div style="height: 360px; overflow-y: auto;margin-bottom: 17px;">
+            <div style="height: 360px; overflow-y: auto; margin-bottom: 17px;">
                 <p-table [value]="cuotas" styleClass="p-datatable-gridlines">
                     <ng-template pTemplate="header">
                         <tr>
@@ -55,5 +87,6 @@
             <p-button label="Descargar Tabla" (click)="descargarTabla()" [disabled]="cuotas.length === 0"></p-button>
         </div>
     </div>
+  </div>
 </section>
 <app-footer></app-footer>
