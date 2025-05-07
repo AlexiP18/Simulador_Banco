@@ -67,7 +67,7 @@ export class CreditosComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    // Initialize with sample data
+    // Initialize with sample data (original 3 credit types)
     this.creditTypes = [
       {
         id: 1,
@@ -110,6 +110,96 @@ export class CreditosComponent implements OnInit {
           { id: 1, name: 'Solca', amount: 200, selected: true },
           { id: 3, name: 'Bomberos', amount: 75, selected: true },
           { id: 4, name: 'Seguro', amount: 500, selected: true }
+        ],
+        enabled: true,
+        selected: true
+      },
+      // Agregar más filas para demostrar el scroll vertical
+      {
+        id: 4,
+        name: 'Crédito Hipotecario',
+        interestRate: 8.5,
+        maxTerm: 20,
+        termUnit: 'años',
+        additionalCharges: [
+          { id: 1, name: 'Avalúo', amount: 350, selected: true },
+          { id: 2, name: 'Gastos Legales', amount: 450, selected: true }
+        ],
+        enabled: true,
+        selected: true
+      },
+      {
+        id: 5,
+        name: 'Crédito Automotriz',
+        interestRate: 12.75,
+        maxTerm: 72,
+        termUnit: 'meses',
+        additionalCharges: [
+          { id: 1, name: 'Seguro del Vehículo', amount: 650, selected: true },
+          { id: 2, name: 'Comisión', amount: 200, selected: true }
+        ],
+        enabled: true,
+        selected: true
+      },
+      {
+        id: 6,
+        name: 'Crédito de Consumo',
+        interestRate: 16.25,
+        maxTerm: 48,
+        termUnit: 'meses',
+        additionalCharges: [
+          { id: 1, name: 'Seguro', amount: 125, selected: true }
+        ],
+        enabled: true,
+        selected: true
+      },
+      {
+        id: 7,
+        name: 'Crédito Agrícola',
+        interestRate: 9.3,
+        maxTerm: 10,
+        termUnit: 'años',
+        additionalCharges: [
+          { id: 1, name: 'Seguro Agrícola', amount: 300, selected: true },
+          { id: 2, name: 'Estudio Técnico', amount: 250, selected: true }
+        ],
+        enabled: false,
+        selected: true
+      },
+      {
+        id: 8,
+        name: 'Microcrédito',
+        interestRate: 22.5,
+        maxTerm: 36,
+        termUnit: 'meses',
+        additionalCharges: [
+          { id: 1, name: 'Capacitación', amount: 50, selected: true }
+        ],
+        enabled: true,
+        selected: true
+      },
+      {
+        id: 9,
+        name: 'Crédito para PYMES',
+        interestRate: 14.8,
+        maxTerm: 8,
+        termUnit: 'años',
+        additionalCharges: [
+          { id: 1, name: 'Estudio Financiero', amount: 480, selected: true },
+          { id: 2, name: 'Seguro', amount: 350, selected: true }
+        ],
+        enabled: true,
+        selected: true
+      },
+      {
+        id: 10,
+        name: 'Crédito para Vivienda',
+        interestRate: 7.9,
+        maxTerm: 25,
+        termUnit: 'años',
+        additionalCharges: [
+          { id: 1, name: 'Gastos Notariales', amount: 400, selected: true },
+          { id: 2, name: 'Seguro de Inmueble', amount: 550, selected: true }
         ],
         enabled: true,
         selected: true

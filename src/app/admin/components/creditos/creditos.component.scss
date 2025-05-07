@@ -121,9 +121,10 @@ h1 {
 .creditos-container {
   display: flex;
   flex-direction: column;
-  max-width: 1200px;
+  max-width: 1600px; /* Aumentar el ancho máximo de 1200px a 1600px */
+  width: 96%; /* Usar un porcentaje del ancho total en lugar de margen fijo */
   margin: 0 auto;
-  padding: 20px;
+  padding: 10px; /* Reducir el padding de 20px a 10px */
   font-family: 'Roboto', Arial, sans-serif;
 
   h1 {
@@ -142,60 +143,101 @@ h1 {
 
   // Tabla de créditos - Izquierda
   .tabla {
-    flex: 1 1 calc(40% - 10px);
+    flex: 0 0 64%; /* Ajustar ancho para mantener proporción con el gap */
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
     padding: 20px;
-
-    .tabla-acciones {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      margin-bottom: 15px;
-
-      .action-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        background-color: #f5f5f5;
-        color: $text-color;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: all 0.2s;
-
-        &:hover {
-          background-color: #e0e0e0;
-          color: $primary-color;
-        }
-
-        .material-icons {
-          font-size: 20px;
-        }
-      }
-    }
+    overflow: hidden; /* Evitar que el contenido se desborde */
 
     .table-container {
-      overflow-x: auto;
+      overflow-y: auto; /* Permitir scroll vertical */
+      overflow-x: auto; /* Permitir scroll horizontal */
+      max-height: 280px; /* Altura para mostrar aproximadamente 5 filas */
       margin-bottom: 15px;
+
+      /* Estilos del scrollbar - cambiados a color gris */
+      &::-webkit-scrollbar {
+        width: 10px; /* Ancho para scrollbar vertical */
+        height: 10px; /* Altura para scrollbar horizontal */
+      }
+
+      &::-webkit-scrollbar-track {
+        background: #e6e6e6; /* Color del track - mantenido igual */
+        border-radius: 10px;
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: #888888; /* Color gris para el thumb */
+        border-radius: 10px;
+        border: 2px solid #e6e6e6;
+        transition: background-color 0.3s, border-color 0.3s;
+      }
+
+      &::-webkit-scrollbar-thumb:hover {
+        background: #666666; /* Color gris más oscuro al pasar el mouse */
+        border-color: #d4d4d4;
+      }
+
+      &::-webkit-scrollbar-corner {
+        background: transparent;
+      }
+
+      /* Estilo para Firefox */
+      scrollbar-color: #888888 #e6e6e6; /* Color gris del thumb y track */
+      scrollbar-width: thin;
 
       table {
         width: 100%;
-        border-collapse: collapse;
+        min-width: 650px; /* Ancho mínimo para forzar scroll en pantallas pequeñas */
+        border-collapse: separate;
+        border-spacing: 0;
+        table-layout: fixed; /* Fijar el layout de la tabla */
         text-align: left;
+        font-size: 1rem; /* Aumentar tamaño de fuente al mismo que el formulario */
 
         thead {
+          position: sticky;
+          top: 0;
+          z-index: 10;
+
           tr {
             background-color: $light-bg;
 
             th {
-              padding: 15px 10px;
+              padding: 8px 4px;
               font-weight: 500;
               color: $dark-text;
               border-bottom: 2px solid #e0e0e0;
+              background-color: $light-bg;
+              white-space: nowrap; /* Evitar saltos de línea */
+              overflow: hidden;
+              text-overflow: ellipsis;
+              font-size: 1rem; /* Asegurar coherencia con el tamaño de fuente */
+
+              /* Ajustar anchos específicos por columna */
+              &:nth-child(1) { /* Columna de checkbox */
+                width: 40px;
+              }
+              &:nth-child(2) { /* Columna de nombre */
+                width: 150px; /* Ancho absoluto en lugar de porcentaje */
+              }
+              &:nth-child(3) { /* Columna de tasa */
+                width: 70px;
+              }
+              &:nth-child(4) { /* Columna de plazo */
+                width: 100px;
+              }
+              &:nth-child(5) { /* Columna de cobros adicionales */
+                width: 70px;
+              }
+              &:nth-child(6) { /* Columna de habilitar */
+                width: 80px;
+              }
+              &:nth-child(7) { /* Columna de acciones */
+                width: 100px;
+              }
             }
           }
         }
@@ -209,224 +251,347 @@ h1 {
             }
 
             td {
-              padding: 12px 10px;
+              padding: 8px 4px;
               border-bottom: 1px solid #eee;
               color: $text-color;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              font-size: 1rem; /* Asegurar coherencia con el tamaño de fuente */
+            }
+          }
+        }
+      }
+    }
+  }
 
-              .btn-primary {
-                padding: 8px 16px;
-                background-color: $primary-color;
-                color: white;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                transition: background-color 0.2s;
+  // Eliminar la reducción del tamaño de fuente
+  .table-container {
+    table {
+      font-size: 1rem !important; /* Forzar tamaño de fuente coherente con el formulario */
 
-                &:hover {
-                  background-color: darken($primary-color, 10%);
-                }
+      thead tr th,
+      tbody tr td {
+        padding: 8px 4px; /* Mantener padding reducido para optimizar espacio */
+      }
+    }
+  }
+
+  .tabla-acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 15px;
+
+    .action-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: #f5f5f5;
+      color: $text-color;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background-color: #e0e0e0;
+        color: $primary-color;
+      }
+
+      .material-icons {
+        font-size: 20px;
+      }
+    }
+  }
+
+  .table-container {
+    overflow-y: auto; /* Permitir scroll vertical */
+    max-height: 400px; /* Altura máxima para activar el scroll */
+    margin-bottom: 15px;
+
+    /* Estilos del scrollbar */
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #e6e6e6;
+      border-radius: 10px;
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: linear-gradient(45deg, $primary-color, darken($primary-color, 10%));
+      border-radius: 10px;
+      border: 2px solid #e6e6e6;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(45deg, darken($primary-color, 10%), darken($primary-color, 20%));
+      border-color: #d4d4d4;
+    }
+
+    &::-webkit-scrollbar-corner {
+      background: transparent;
+    }
+
+    /* Estilo del scrollbar para Firefox */
+    scrollbar-color: $primary-color #e6e6e6; /* Color del thumb y del track */
+    scrollbar-width: thin; /* Ancho del scrollbar (thin, auto, none) */
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      text-align: left;
+
+      thead {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+
+        tr {
+          background-color: $light-bg;
+
+          th {
+            padding: 15px 10px;
+            font-weight: 500;
+            color: $dark-text;
+            border-bottom: 2px solid #e0e0e0;
+            background-color: $light-bg; /* Asegurar fondo sólido para cabeceras */
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          transition: background-color 0.2s;
+
+          &:hover {
+            background-color: #f5f5f5;
+          }
+
+          td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #eee;
+            color: $text-color;
+
+            .btn-primary {
+              padding: 8px 16px;
+              background-color: $primary-color;
+              color: white;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+              transition: background-color 0.2s;
+
+              &:hover {
+                background-color: darken($primary-color, 10%);
               }
             }
           }
         }
       }
     }
+  }
 
-    // Checkbox estilos
-    .checkbox-wrapper {
-      position: relative;
-      width: 18px;
-      height: 18px;
-      margin: 0 auto;
+  // Checkbox estilos
+  .checkbox-wrapper {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    margin: 0 auto;
 
-      input[type="checkbox"].select-checkbox {
-        position: absolute;
-        opacity: 0;
+    input[type="checkbox"].select-checkbox {
+      position: absolute;
+      opacity: 0;
 
-        & + label {
-          position: relative;
-          cursor: pointer;
-          display: inline-block;
-          width: 18px;
-          height: 18px;
-          border: 2px solid #ccc;
-          border-radius: 3px;
-
-          &:before {
-            content: '';
-            position: absolute;
-            left: 3px;
-            top: 0px;
-            width: 5px;
-            height: 10px;
-            border: solid white;
-            border-width: 0 2px 2px 0;
-            transform: rotate(45deg);
-            opacity: 0;
-          }
-        }
-
-        &:checked + label {
-          border-color: $primary-color;
-          background-color: $primary-color;
-
-          &:before {
-            opacity: 1;
-          }
-        }
-
-        &:focus + label {
-          box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.2);
-        }
-      }
-    }
-
-    // Toggle switch
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 46px;
-      height: 24px;
-
-      input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-
-        &:checked + .slider {
-          background-color: $green-color;
-        }
-
-        &:focus + .slider {
-          box-shadow: 0 0 1px $green-color;
-        }
-
-        &:checked + .slider:before {
-          transform: translateX(22px);
-        }
-      }
-
-      .slider {
-        position: absolute;
+      & + label {
+        position: relative;
         cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ccc;
-        transition: .3s;
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        border: 2px solid #ccc;
+        border-radius: 3px;
 
         &:before {
+          content: '';
           position: absolute;
-          content: "";
-          height: 18px;
-          width: 18px;
           left: 3px;
-          bottom: 3px;
-          background-color: white;
-          transition: .3s;
+          top: 0px;
+          width: 5px;
+          height: 10px;
+          border: solid white;
+          border-width: 0 2px 2px 0;
+          transform: rotate(45deg);
+          opacity: 0;
         }
+      }
 
-        &.round {
-          border-radius: 24px;
+      &:checked + label {
+        border-color: $primary-color;
+        background-color: $primary-color;
 
-          &:before {
-            border-radius: 50%;
-          }
+        &:before {
+          opacity: 1;
         }
+      }
+
+      &:focus + label {
+        box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.2);
+      }
+    }
+  }
+
+  // Toggle switch
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 46px;
+    height: 24px;
+
+    input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+
+      &:checked + .slider {
+        background-color: $green-color;
+      }
+
+      &:focus + .slider {
+        box-shadow: 0 0 1px $green-color;
+      }
+
+      &:checked + .slider:before {
+        transform: translateX(22px);
       }
     }
 
-    // Table footer
-    .table-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      padding-top: 15px;
-      border-top: 1px solid #eee;
-      gap: 20px;
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .3s;
 
-      .pagination {
+      &:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: .3s;
+      }
+
+      &.round {
+        border-radius: 24px;
+
+        &:before {
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+  // Table footer
+  .table-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    gap: 20px;
+
+    .pagination {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      .pagination-btn {
         display: flex;
         align-items: center;
-        gap: 5px;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        background-color: transparent;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        color: $text-color;
+        transition: background-color 0.2s;
 
-        .pagination-btn {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 36px;
-          height: 36px;
-          background-color: transparent;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          color: $text-color;
-          transition: background-color 0.2s;
-
-          &:hover {
-            background-color: #f0f0f0;
-            color: $primary-color;
-          }
-
-          .material-icons {
-            font-size: 20px;
-          }
+        &:hover {
+          background-color: #f0f0f0;
+          color: $primary-color;
         }
 
-        .page-number {
-          display: flex;
-          align-items: center;
-          margin: 0 5px;
-
-          input {
-            width: 36px;
-            height: 36px;
-            text-align: center;
-            border: 1px solid $border-color;
-            border-radius: 4px;
-            font-size: 14px;
-            appearance: textfield; /* Firefox */
-
-            &::-webkit-outer-spin-button,
-            &::-webkit-inner-spin-button {
-              -webkit-appearance: none;
-              margin: 0;
-            }
-
-            &:focus {
-              outline: none;
-              border-color: $primary-color;
-            }
-          }
-
-          span {
-            margin-left: 5px;
-            color: #777;
-          }
+        .material-icons {
+          font-size: 20px;
         }
       }
 
-      .rows-per-page {
+      .page-number {
         display: flex;
         align-items: center;
-        gap: 10px;
-        color: $text-color;
-        font-size: 14px;
+        margin: 0 5px;
 
-        select {
-          padding: 6px 8px;
+        input {
+          width: 36px;
+          height: 36px;
+          text-align: center;
           border: 1px solid $border-color;
           border-radius: 4px;
-          background-color: white;
-          cursor: pointer;
-          font-size: 15px;
+          font-size: 14px;
+          appearance: textfield; /* Firefox */
+
+          &::-webkit-outer-spin-button,
+          &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
 
           &:focus {
             outline: none;
             border-color: $primary-color;
           }
+        }
+
+        span {
+          margin-left: 5px;
+          color: #777;
+        }
+      }
+    }
+
+    .rows-per-page {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: $text-color;
+      font-size: 14px;
+
+      select {
+        padding: 6px 8px;
+        border: 1px solid $border-color;
+        border-radius: 4px;
+        background-color: white;
+        cursor: pointer;
+        font-size: 15px;
+
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
         }
       }
     }
@@ -434,10 +599,11 @@ h1 {
 
   // Formularios - Derecha
   .forms-container {
-    flex: 1 1 25%;
+    flex: 0 0 32%; /* Aumentar del 28% al 32% */
     display: flex;
     flex-direction: column;
     gap: 20px;
+    min-width: 280px; /* Aumentar el ancho mínimo para mejor legibilidad */
 
     .formulario {
       background-color: #ffffff;
@@ -549,7 +715,8 @@ h1 {
 
       .charges-table-container {
         margin: 20px 0;
-        overflow-y: auto; /* Enable vertical scrolling */
+        overflow-y: auto; /* Permitir scroll vertical */
+        overflow-x: auto; /* Cambiar de hidden a auto para permitir scroll horizontal */
         max-height: 250px; /* Height that fits approximately 5 rows */
 
         /* Apply matching scrollbar styling */
@@ -564,30 +731,16 @@ h1 {
           box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
         }
 
-        /* Style for vertical scrollbar thumb */
-        &::-webkit-scrollbar-thumb:vertical {
-          background: linear-gradient(45deg, $primary-color, darken($primary-color, 10%));
-          border-radius: 10px;
-          border: 2px solid #e6e6e6;
-          transition: background-color 0.3s, border-color 0.3s;
-        }
-
-        /* Style for horizontal scrollbar thumb - dark gray */
-        &::-webkit-scrollbar-thumb:horizontal {
-          background: #555555; /* Dark gray color */
+        /* Style for both vertical and horizontal scrollbars - usando mismo color gris */
+        &::-webkit-scrollbar-thumb {
+          background: #888888; /* Color gris para el thumb */
           border-radius: 10px;
           border: 2px solid #e6e6e6;
           transition: background-color 0.3s, border-color 0.3s;
         }
 
         &::-webkit-scrollbar-thumb:hover {
-          background: linear-gradient(45deg, darken($primary-color, 10%), darken($primary-color, 20%));
-          border-color: #d4d4d4;
-        }
-
-        /* Style for horizontal scrollbar thumb hover - darker gray */
-        &::-webkit-scrollbar-thumb:horizontal:hover {
-          background: #444444; /* Darker gray on hover */
+          background: #666666; /* Color gris más oscuro al pasar el mouse */
           border-color: #d4d4d4;
         }
 
@@ -596,11 +749,12 @@ h1 {
         }
 
         /* Firefox scrollbar styling */
-        scrollbar-color: #555555 #e6e6e6; /* Dark gray thumb, light gray track */
+        scrollbar-color: #888888 #e6e6e6; /* Color gris del thumb y track */
         scrollbar-width: thin;
 
         table {
           width: 100%;
+          min-width: 300px; /* Ancho mínimo para garantizar scroll horizontal en espacios pequeños */
           border-collapse: separate; /* Changed from collapse to make sticky headers work better */
           border-spacing: 0; /* Ensure no gaps between cells */
           text-align: left;
@@ -672,6 +826,7 @@ h1 {
   .scroll-container {
     flex: 1;
     overflow-y: auto;
+    overflow-x: hidden; /* Deshabilitar scroll horizontal */
     /* Opcional: establecer max-height si se requiere */
     /* max-height: 600px; */
     max-height: calc(8 * 48px + 40px); /* Incrementa la altura para más contenido visible */
@@ -758,6 +913,47 @@ h1 {
   }
 }
 
+/* Optimizar uso del espacio en pantallas extra grandes */
+@media (min-width: 1600px) {
+  .creditos-container {
+    width: 98%; /* Usar aún más espacio horizontal en pantallas muy grandes */
+  }
+
+  .content-layout {
+    .tabla {
+      flex: 0 0 62%; /* Reducir del 65% al 62% */
+    }
+
+    .forms-container {
+      flex: 0 0 35%; /* Aumentar del 32% al 35% */
+    }
+  }
+}
+
+/* Optimizar uso del espacio en pantallas grandes */
+@media (min-width: 1200px) and (max-width: 1599px) {
+  .creditos-container {
+    width: 97%; /* Usar más espacio horizontal en pantallas grandes */
+  }
+
+  .content-layout {
+    .tabla {
+      flex: 0 0 61%; /* Reducir del 64% al 61% */
+    }
+
+    .forms-container {
+      flex: 0 0 35%; /* Aumentar del 32% al 35% */
+    }
+  }
+}
+
+/* Optimizar uso del espacio en pantallas medianas */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .creditos-container {
+    width: 96%; /* Usar más espacio horizontal */
+  }
+}
+
 .input-wrapper {
   display: flex;
   align-items: center;
@@ -816,14 +1012,16 @@ h1 {
 }
 
 .forms-container {
-  flex: 1 1 33%; /* La columna izquierda ocupa 1/3 del ancho */
+  flex: 0 0 35%; /* Aumentar del 32% al 35% */
   display: flex;
   flex-direction: column;
+  min-width: 280px; /* Aumentar el ancho mínimo para mejor legibilidad */
 }
 
 .scroll-container {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden; /* Deshabilitar scroll horizontal */
   max-height: calc(8 * 48px + 40px); /* Incrementa la altura para más contenido visible */
 
   /* Estilo del scrollbar */
@@ -859,41 +1057,134 @@ h1 {
 }
 
 .tabla {
-  flex: 1 1 67%; /* La columna derecha ocupa 2/3 del ancho */
+  flex: 0 0 61%; /* Reducir del 64% al 61% */
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
   padding: 20px;
+  overflow: hidden; /* Evitar que el contenido se desborde */
 
   .table-container {
-    overflow-x: auto;
+    overflow-y: auto; /* Permitir scroll vertical */
+    overflow-x: auto; /* Permitir scroll horizontal */
+    max-height: 280px; /* Altura para mostrar aproximadamente 5 filas */
+    margin-bottom: 15px;
+
+    /* Estilos del scrollbar - cambiados a color gris */
+    &::-webkit-scrollbar {
+      width: 10px; /* Ancho para scrollbar vertical */
+      height: 10px; /* Altura para scrollbar horizontal */
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #e6e6e6; /* Color del track - mantenido igual */
+      border-radius: 10px;
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #888888; /* Color gris para el thumb */
+      border-radius: 10px;
+      border: 2px solid #e6e6e6;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #666666; /* Color gris más oscuro al pasar el mouse */
+      border-color: #d4d4d4;
+    }
+
+    &::-webkit-scrollbar-corner {
+      background: transparent;
+    }
+
+    /* Estilo para Firefox */
+    scrollbar-color: #888888 #e6e6e6; /* Color gris del thumb y track */
+    scrollbar-width: thin;
 
     table {
       width: 100%;
-      border-collapse: collapse;
+      min-width: 650px; /* Ancho mínimo para forzar scroll en pantallas pequeñas */
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed; /* Fijar el layout de la tabla */
+      text-align: left;
+      font-size: 1rem; /* Aumentar tamaño de fuente al mismo que el formulario */
 
       thead {
+        // ...existing code...
+
         tr {
-          background-color: $light-bg;
+          // ...existing code...
 
           th {
-            padding: 15px 10px;
+            padding: 8px 4px;
             font-weight: 500;
             color: $dark-text;
             border-bottom: 2px solid #e0e0e0;
+            background-color: $light-bg;
+            white-space: nowrap; /* Evitar saltos de línea */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 1rem; /* Asegurar coherencia con el tamaño de fuente */
+
+            /* Ajustar anchos específicos por columna */
+            &:nth-child(1) { /* Columna de checkbox */
+              width: 40px;
+            }
+            &:nth-child(2) { /* Columna de nombre */
+              width: 150px; /* Ancho absoluto en lugar de porcentaje */
+            }
+            &:nth-child(3) { /* Columna de tasa */
+              width: 70px;
+            }
+            &:nth-child(4) { /* Columna de plazo */
+              width: 100px;
+            }
+            &:nth-child(5) { /* Columna de cobros adicionales */
+              width: 70px;
+            }
+            &:nth-child(6) { /* Columna de habilitar */
+              width: 80px;
+            }
+            &:nth-child(7) { /* Columna de acciones */
+              width: 100px;
+            }
           }
         }
       }
 
       tbody {
         tr {
+          &:hover {
+            background-color: #f5f5f5;
+          }
+
           td {
-            padding: 12px 10px;
+            padding: 8px 4px;
             border-bottom: 1px solid #eee;
             color: $text-color;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 1rem; /* Asegurar coherencia con el tamaño de fuente */
+
+            // ...existing code...
           }
         }
       }
+    }
+  }
+}
+
+// Eliminar la reducción del tamaño de fuente
+.table-container {
+  table {
+    font-size: 1rem !important; /* Forzar tamaño de fuente coherente con el formulario */
+
+    thead tr th,
+    tbody tr td {
+      padding: 8px 4px; /* Mantener padding reducido para optimizar espacio */
     }
   }
 }
@@ -1081,8 +1372,9 @@ h1 {
     margin: 0;
     max-height: 300px; /* Allow space for about 5 rows then scroll */
     overflow-y: auto;
+    overflow-x: auto; /* Cambiar de scroll vertical solo a permitir también horizontal */
 
-    /* Same scrollbar styling as above */
+    /* Mismos estilos de scrollbar pero en color gris */
     &::-webkit-scrollbar {
       width: 10px;
       height: 10px;
@@ -1095,13 +1387,13 @@ h1 {
     }
 
     &::-webkit-scrollbar-thumb {
-      background: #555555;
+      background: #888888; /* Color gris para el thumb */
       border-radius: 10px;
       border: 2px solid #e6e6e6;
     }
 
     &::-webkit-scrollbar-thumb:hover {
-      background: #444444;
+      background: #666666; /* Color gris más oscuro al pasar el mouse */
       border-color: #d4d4d4;
     }
 
@@ -1109,7 +1401,12 @@ h1 {
       background: transparent;
     }
 
+    /* Firefox scrollbar */
+    scrollbar-color: #888888 #e6e6e6;
+    scrollbar-width: thin;
+
     table {
+      min-width: 350px; /* Ancho mínimo para garantizar scroll horizontal */
       width: 100%;
       border-collapse: separate;
       border-spacing: 0;
@@ -1177,6 +1474,19 @@ h1 {
 
     button {
       width: 100%;
+    }
+  }
+}
+
+// Ajustar las columnas en pantallas grandes
+@media (min-width: 1200px) {
+  .content-layout {
+    .tabla {
+      flex: 0 0 61%; /* Reducir la columna derecha */
+    }
+
+    .forms-container {
+      flex: 0 0 35%; /* Aumentar la columna izquierda */
     }
   }
 }

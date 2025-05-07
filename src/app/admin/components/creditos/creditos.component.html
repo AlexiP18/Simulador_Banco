@@ -149,7 +149,6 @@
         <button class="action-btn" title="Eliminar">
           <span class="material-icons">delete</span>
         </button>
-        <!-- "Editar" button removed -->
       </div>
 
       <div class="table-container">
@@ -167,7 +166,7 @@
               <th>Plazo max.</th>
               <th>Cobros Adic.</th>
               <th>Habilitar</th>
-              <th>Acciones</th> <!-- Added new column for actions -->
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -182,7 +181,9 @@
               <td>{{credit.interestRate}}%</td>
               <td>{{credit.maxTerm}} {{credit.termUnit}}</td>
               <td>
-                <button class="btn-primary" (click)="viewAdditionalCharges(credit)">Ver</button>
+                <button class="icon-btn" (click)="viewAdditionalCharges(credit)" title="Ver cobros adicionales">
+                  <span class="material-icons">visibility</span>
+                </button>
               </td>
               <td>
                 <label class="switch">
@@ -190,7 +191,7 @@
                   <span class="slider round"></span>
                 </label>
               </td>
-              <td> <!-- Added new cell with action buttons -->
+              <td>
                 <button class="icon-btn" (click)="editCredit(credit)" title="Editar">
                   <span class="material-icons">edit</span>
                 </button>

@@ -5,22 +5,22 @@
     <form>
       <div class="form-group">
         <label for="nombre">Nombre</label>
-        <input id="nombre" type="text" placeholder="Nombre..." />
+        <input id="nombre" type="text" placeholder="Nombre..." [(ngModel)]="asesorForm.nombre" name="nombre" />
       </div>
       <div class="form-group">
         <label for="apellido">Apellido</label>
-        <input id="apellido" type="text" placeholder="Apellido..." />
+        <input id="apellido" type="text" placeholder="Apellido..." [(ngModel)]="asesorForm.apellido" name="apellido" />
       </div>
       <div class="form-group">
         <label for="cargo">Cargo</label>
-        <select id="cargo">
+        <select id="cargo" [(ngModel)]="asesorForm.cargo" name="cargo">
           <option value="">Establezca el cargo...</option>
-          <option value="asesor">Asesor</option>
-          <option value="cajero">Cajero</option>
+          <option value="Asesor">Asesor</option>
+          <option value="Cajero">Cajero</option>
         </select>
       </div>
-      <button type="button" class="btn-agregar">
-        Agregar <span class="material-icons">arrow_forward</span>
+      <button type="button" class="btn-agregar" (click)="guardar()">
+        {{ modoEdicion ? 'Actualizar' : 'Agregar' }} <span class="material-icons">arrow_forward</span>
       </button>
     </form>
   </div>
@@ -34,72 +34,49 @@
       <button class="action-btn" title="Eliminar">
         <span class="material-icons">delete</span>
       </button>
-      <button class="action-btn" title="Editar">
-        <span class="material-icons">edit</span>
-      </button>
+      <!-- Botón de editar eliminado -->
     </div>
     <div class="table-container">
       <table>
         <thead>
           <tr>
-            <th>
+            <th style="width: 50px;">
               <div class="checkbox-wrapper">
-                <input type="checkbox" id="select-all" class="select-checkbox" />
+                <input type="checkbox" id="select-all" class="select-checkbox"
+                       (change)="seleccionarTodos($event)" [checked]="todosSeleccionados"/>
                 <label for="select-all"></label>
               </div>
             </th>
-            <th>Nombre</th>
-            <th>Cargo</th>
-            <th>Estado</th>
+            <th style="width: 30%;">Nombre</th>
+            <th style="width: 20%;">Cargo</th>
+            <th style="width: 100px;">Estado</th>
+            <th style="width: 120px;">Acciones</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr *ngFor="let asesor of asesores; let i = index">
             <td>
               <div class="checkbox-wrapper">
-                <input type="checkbox" id="row1" class="select-checkbox" />
-                <label for="row1"></label>
+                <input type="checkbox" [id]="'row'+i" class="select-checkbox"
+                       [(ngModel)]="asesor.seleccionado" (change)="verificarSeleccionTodos()"/>
+                <label [for]="'row'+i"></label>
               </div>
             </td>
-            <td>Alex</td>
-            <td>Asesor</td>
+            <td>{{ asesor.nombre }}</td>
+            <td>{{ asesor.cargo }}</td>
             <td>
               <label class="switch">
-                <input type="checkbox" checked />
+                <input type="checkbox" [(ngModel)]="asesor.activo" />
                 <span class="slider round"></span>
               </label>
             </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="checkbox-wrapper">
-                <input type="checkbox" id="row2" class="select-checkbox" />
-                <label for="row2"></label>
-              </div>
-            </td>
-            <td>Jose</td>
-            <td>Cajero</td>
-            <td>
-              <label class="switch">
-                <input type="checkbox" />
-                <span class="slider round"></span>
-              </label>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="checkbox-wrapper">
-                <input type="checkbox" id="row3" class="select-checkbox" />
-                <label for="row3"></label>
-              </div>
-            </td>
-            <td>Juan</td>
-            <td>Asesor</td>
-            <td>
-              <label class="switch">
-                <input type="checkbox" checked />
-                <span class="slider round"></span>
-              </label>
+            <td class="acciones">
+              <button class="action-btn" title="Editar" (click)="editar(asesor)">
+                <span class="material-icons">edit</span>
+              </button>
+              <button class="action-btn" title="Eliminar" (click)="eliminar(i)">
+                <span class="material-icons">delete</span>
+              </button>
             </td>
           </tr>
         </tbody>
@@ -135,6 +112,28 @@
           <option value="25">25</option>
           <option value="30">30</option>
         </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de confirmación para eliminar -->
+  <div class="modal-overlay" *ngIf="mostrarModalEliminar">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>Eliminar Asesor Crediticio</h3>
+        <button class="modal-close" (click)="cancelarEliminar()">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>¿Está seguro que desea eliminar este asesor crediticio?</p>
+        <p *ngIf="asesorAEliminar !== null">
+          <strong>{{ asesores[asesorAEliminar].nombre }}</strong> - {{ asesores[asesorAEliminar].cargo }}
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancelar" (click)="cancelarEliminar()">Cancelar</button>
+        <button class="btn-eliminar" (click)="confirmarEliminar()">Eliminar</button>
       </div>
     </div>
   </div>

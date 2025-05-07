@@ -117,16 +117,44 @@
     }
 
     .table-container {
-      overflow-x: auto;
+      overflow: hidden;
       margin-bottom: 15px;
+
+      // Custom scrollbar styling
+      &::-webkit-scrollbar {
+        width: 8px;
+        background-color: #f5f5f5;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: #c1c1c1;
+        border-radius: 4px;
+
+        &:hover {
+          background-color: #a8a8a8;
+        }
+      }
+
+      &::-webkit-scrollbar-track {
+        background-color: #f5f5f5;
+        border-radius: 4px;
+      }
+
+      // Firefox scrollbar
+      scrollbar-width: thin;
+      scrollbar-color: #c1c1c1 #f5f5f5;
 
       table {
         width: 100%;
         border-collapse: collapse;
         text-align: left;
+        table-layout: fixed;
 
         thead {
           tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
             background-color: #f9f9f9;
 
             th {
@@ -139,7 +167,38 @@
         }
 
         tbody {
+          display: block;
+          max-height: 350px; /* Increased height to show 5 rows comfortably */
+          overflow-y: auto;
+
+          /* Custom scrollbar for tbody */
+          &::-webkit-scrollbar {
+            width: 8px;
+            background-color: #f5f5f5;
+          }
+
+          &::-webkit-scrollbar-thumb {
+            background-color: #c1c1c1;
+            border-radius: 4px;
+
+            &:hover {
+              background-color: #a8a8a8;
+            }
+          }
+
+          &::-webkit-scrollbar-track {
+            background-color: #f5f5f5;
+            border-radius: 4px;
+          }
+
+          // Firefox scrollbar
+          scrollbar-width: thin;
+          scrollbar-color: #c1c1c1 #f5f5f5;
+
           tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
             transition: background-color 0.2s;
 
             &:hover {
@@ -150,6 +209,35 @@
               padding: 12px 10px;
               border-bottom: 1px solid #eee;
               color: #555;
+            }
+
+            .acciones {
+              display: flex;
+              gap: 5px;
+              justify-content: center;
+
+              .action-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 32px;
+                height: 32px;
+                background-color: #f5f5f5;
+                color: #555;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: all 0.2s;
+
+                &:hover {
+                  background-color: #e0e0e0;
+                  color: #3f51b5;
+                }
+
+                .material-icons {
+                  font-size: 18px;
+                }
+              }
             }
           }
         }
@@ -359,13 +447,13 @@
 
   @media (min-width: 768px) {
     .formulario {
-      flex: 1 1 40%;
-      max-width: 40%;
+      flex: 1 1 35%; /* Reduced from 40% to 35% */
+      max-width: 35%; /* Reduced from 40% to 35% */
     }
 
     .tabla {
-      flex: 1 1 55%;
-      max-width: 55%;
+      flex: 1 1 60%; /* Increased from 55% to 60% */
+      max-width: 60%; /* Increased from 55% to 60% */
     }
   }
 
@@ -380,6 +468,126 @@
         width: 100%;
         justify-content: center;
       }
+    }
+  }
+}
+
+// Modal de confirmación para eliminar
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-container {
+  background-color: white;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+
+  h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #3a3a3a;
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #777;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #f2f2f2;
+      color: #3f51b5;
+    }
+
+    .material-icons {
+      font-size: 24px;
+    }
+  }
+}
+
+.modal-body {
+  padding: 20px;
+  color: #555;
+
+  p {
+    margin: 0 0 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px 20px;
+  border-top: 1px solid #eee;
+  gap: 10px;
+
+  button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .btn-cancelar {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    color: #555;
+
+    &:hover {
+      background-color: #e6e6e6;
+    }
+  }
+
+  .btn-eliminar {
+    background-color: #f44336;
+    border: none;
+    color: white;
+
+    &:hover {
+      background-color: #e53935;
     }
   }
 }
